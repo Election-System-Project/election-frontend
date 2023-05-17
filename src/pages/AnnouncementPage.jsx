@@ -1,15 +1,13 @@
-import React from 'react'
-import Header from '../layouts/Header'
-import Footer from '../layouts/Footer'
+import React from "react";
+import Header from "../layouts/Header";
+import Footer from "../layouts/Footer";
 
 function AnnouncementPage() {
-    return (
-        <>
-            <Header />
-            <div>AnnouncementPage</div>
-            <Footer />
-        </>
-    )
+  return (
+    <>
+      <div>AnnouncementPage</div>
+    </>
+  );
 }
 
-export default AnnouncementPage
+export default AnnouncementPage;
