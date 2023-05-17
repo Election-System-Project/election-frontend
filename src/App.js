@@ -1,9 +1,15 @@
 import React from "react";
-import Root from "./routes/root";
+import Router from "./routes/router";
+import Header from "./layouts/Header";
+import Footer from "./layouts/Footer";
 
 function App() {
   return (
-    <Root />
+    <>
+      <Header />
+      <Router />
+      <Footer />
+    </>
   );
 }
 
