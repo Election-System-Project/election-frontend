@@ -10,7 +10,7 @@ const login = async (email, password) => {
   if (res.content.token) {
     localStorage.setItem("user", JSON.stringify(res.content));
   }
-  return res.content;
+  return res;
 };
 
 const logout = () => {

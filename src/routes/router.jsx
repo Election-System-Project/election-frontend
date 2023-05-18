@@ -33,7 +33,6 @@ const publicRoutes = [
 ];
 
 function PrivateRoute({ children, ...rest }) {
-  //const isLoggedIn = useSelector((state) => state.Auth.idToken);
   const isLoggedIn = SessionHelper.getIsLoggedIn();
   return (
     <Route
