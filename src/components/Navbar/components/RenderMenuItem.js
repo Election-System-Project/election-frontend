@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   listItemIcon: {
-    color: "#ffffff",
+    color: "white!important",
   },
   nested: {
     paddingLeft: theme.spacing(4), // Update the spacing value if needed
@@ -42,7 +42,7 @@ export default function RenderMenuItem({ value, index, outer }) {
       <ListItemIcon className={classes.listItemIcon}>
         {index === 0 && outer ? <Home /> : <List />}
       </ListItemIcon>
-      <ListItemText primary={value?.label} />
+      <ListItemText style={{color: "white"}} primary={value?.label} />
     </ListItem>
   );
 }
