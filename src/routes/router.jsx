@@ -6,6 +6,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { getViewAuthorizationForAll } from "../helpers/AuthorizationHelper";
 import SessionHelper from "../helpers/SessionHelper";
 import Navbar from "../components/Navbar/navbar";
 import AnnouncementPage from "../pages/AnnouncementPage";
@@ -61,22 +62,10 @@ export default function AppRoutes() {
   const populateDrawerList = useCallback(() => {
     if (user) {
       const roles = user?.roles;
+      const authorization = getViewAuthorizationForAll(roles);
+
       let drawerList = [
         { label: "Dashboard", Path: "/dashboard" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
         { label: "Announcements", Path: "/announcements" },
       ];
       setDrawerList(drawerList);
