@@ -10,6 +10,7 @@ import {
   Checkbox,
   Button,
 } from "@mui/material";
+import { login } from "../services/auth.service";
 
 const useStyles = makeStyles({
   paperStyle: {
@@ -38,6 +39,14 @@ const useStyles = makeStyles({
 
 export default function Login() {
   const classes = useStyles();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    localStorage.setItem(
+      "user",
+      JSON.stringify([{ email: "Sude" }, { password: "fjgdfıgjıdf" }])
+    );
+  };
 
   return (
     <Grid>
@@ -134,6 +143,7 @@ export default function Login() {
             fontSize: "15px",
           }}
           fullWidth
+          onClick={(e) => handleLogin(e)}
         >
           Log In
         </Button>
