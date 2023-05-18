@@ -1,13 +1,11 @@
 import React from 'react'
-import Header from '../layouts/Header'
-import Footer from '../layouts/Footer'
+import Sidebar from '../layouts/Sidebar'
 
 function AnnouncementPage() {
     return (
         <>
-            <Header />
-            <div>AnnouncementPage</div>
-            <Footer />
+            <Sidebar />
+
         </>
     )
 }

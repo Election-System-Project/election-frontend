@@ -12,7 +12,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import CampaignIcon from '@mui/icons-material/Campaign';
-import MailIcon from '@mui/icons-material/Mail';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -20,6 +19,7 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import { MenuItem } from '@mui/material';
+import AnnouncementPage from '../pages/AnnouncementPage';
 
 
 
@@ -140,18 +140,15 @@ export default function Sidebar() {
                 <Toolbar />
                 <Divider />
                 <List>
-                    {['Announcements'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? <CampaignIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
+                    <ListItem disablePadding>
+                        <ListItemButton href="/announce">
+                            <ListItemIcon>
+                                <CampaignIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Announcements" />
+                        </ListItemButton>
+                    </ListItem>
                 </List>
-           
             </Drawer>
         </Box>
     );
