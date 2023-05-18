@@ -1,6 +1,4 @@
 import React from "react";
-// import { AppBar, Toolbar, Typography, IconButton, Button, Grid } from '@mui/material';
-// import { Menu } from '@material-ui/icons';
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -28,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     zIndex: theme.zIndex.drawer,
+    height: "7rem",
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)!important`,
@@ -93,7 +92,9 @@ export default function TopBar({ open, handleDrawerOpen, logout }) {
           <a href="/dashboard">
             <img className={classes.avatar} alt={logo} src={logo} />
           </a>
-          <Typography style={{marginLeft: "1rem"}} variant="h5">IZTECH Election System</Typography>
+          <Typography style={{ marginLeft: "1rem" }} variant="h5">
+            IZTECH Election System
+          </Typography>
         </Grid>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <Typography
