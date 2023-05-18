@@ -3,11 +3,6 @@ import { makeStyles } from "@mui/styles";
 
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { Home, List } from "@mui/icons-material";
-// import ListItem from "@material-ui/core/ListItem";
-// import ListItemIcon from "@material-ui/core/ListItemIcon";
-// import ListItemText from "@material-ui/core/ListItemText";
-// import ListIcon from "@material-ui/icons/List";
-// import HomeIcon from "@material-ui/icons/Home";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
