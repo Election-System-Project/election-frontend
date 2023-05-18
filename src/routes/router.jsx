@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import SessionHelper from "../helpers/SessionHelper";
 import Navbar from "../components/Navbar/navbar";
-import AnnouncementPage from "../pages/AnnouncementPage";
+import AnnouncementPage from "../pages/AnnouncementPage/AnnouncementPage";
 import Login from "../pages/Login";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/Dashboard";

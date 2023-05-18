@@ -11,7 +11,7 @@ import { Grid } from "@mui/material";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import SessionHelper from "../../../helpers/SessionHelper";
-import logo from "../../../assets/images/uni_logo.jpg";
+import logo from "../../../assets/images/iyte-logo.png";
 
 const drawerWidth = 240;
 
