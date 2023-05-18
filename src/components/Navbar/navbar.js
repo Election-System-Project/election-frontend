@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(10),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -103,14 +103,12 @@ const Navbar = React.memo(function Navbar({ component, drawerList }) {
           handleDrawerOpen={handleDrawerOpen}
           logout={logout}
         />
-
         <NavDrawer
           open={open}
           drawerList={drawerList}
           handleDrawerClose={handleDrawerClose}
           theme={theme}
         />
-
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: open,

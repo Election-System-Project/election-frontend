@@ -65,6 +65,20 @@ export default function AppRoutes() {
       let drawerList = [
         { label: "Dashboard", Path: "/dashboard" },
         { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
+        { label: "Announcements", Path: "/announcements" },
       ];
       setDrawerList(drawerList);
     }
