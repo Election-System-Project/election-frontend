@@ -1,9 +1,13 @@
 import React from "react";
-import Root from "./routes/root";
+import AppRoutes from "./routes/router";
+// import Header from "./layouts/Header";
+// import Footer from "./layouts/Footer";
 
 function App() {
   return (
-    <Root />
+    <div className="App">
+      <AppRoutes />
+    </div>
   );
 }
 

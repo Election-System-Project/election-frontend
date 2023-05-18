@@ -1,13 +1,12 @@
-import React from 'react'
-import Sidebar from '../layouts/Sidebar'
+import React from "react";
 
 function AnnouncementPage() {
-    return (
-        <>
-            <Sidebar />
-
-        </>
-    )
+  console.log("fkmfg");
+  return (
+    <>
+      <div>AnnouncementPage</div>
+    </>
+  );
 }
 
-export default AnnouncementPage
+export default AnnouncementPage;
