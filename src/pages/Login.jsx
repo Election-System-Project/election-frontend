@@ -9,13 +9,15 @@ import {
   FormControlLabel,
   Checkbox,
   Button,
+  CircularProgress,
 } from "@mui/material";
-import { login } from "../services/auth.service";
+import authService from "../services/auth.service";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   paperStyle: {
     padding: 20,
-    height: "70vh",
+    height: "65vh",
     width: 350,
     margin: "40px auto",
   },
@@ -25,7 +27,7 @@ const useStyles = makeStyles({
     fontWeight: "normal",
   },
   title: {
-    color: "red",
+    color: "#b31726",
     marginBottom: 0,
   },
   altTitle: {
@@ -35,17 +37,48 @@ const useStyles = makeStyles({
   inputGrid: {
     margin: "3rem auto 0.5rem",
   },
+  buttonContainer: {
+    marginTop: 40,
+    textAlign: "center",
+  },
 });
 
 export default function Login() {
   const classes = useStyles();
+  const [loading, setLoading] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const history = useHistory();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    localStorage.setItem(
-      "user",
-      JSON.stringify([{ email: "Sude" }, { password: "fjgdfıgjıdf" }])
-    );
+    setLoading(true);
+    // const res = authService.login(email, password);  fix after backend deployment
+    const res = {
+      status: 200,
+      content: {
+        name: "Sude Nur",
+        surname: "Çevik",
+        email: email,
+      },
+    };
+    console.log(res);
+
+    if (res?.status === 200) {
+      let data = res.content;
+      console.log(data);
+      setTimeout(() => {
+        localStorage.setItem("user", JSON.stringify(res.content));
+
+        history?.location?.state
+          ? history.push(history?.location?.state?.from?.pathname)
+          : history.push("/dashboard");
+        setLoading(false);
+      }, 3000);
+    } else {
+      // console.log(res?.data?.message);  fix after backend deployment
+      console.log("error");
+    }
   };
 
   return (
@@ -90,6 +123,7 @@ export default function Login() {
             type="email"
             fullWidth
             required
+            onChange={(email) => setEmail(email.target.value)}
           />
           <TextField
             variant="filled"
@@ -113,6 +147,7 @@ export default function Login() {
             type="password"
             fullWidth
             required
+            onChange={(password) => setPassword(password.target.value)}
           />
         </Grid>
         <FormControlLabel
@@ -120,33 +155,39 @@ export default function Login() {
             <Checkbox
               name="checkedB"
               sx={{
-                color: "red",
+                color: "#b31726",
                 "&.Mui-checked": {
-                  color: "red",
+                  color: "#b31726",
                 },
               }}
             />
           }
           label="Remember me"
         />
-        <Button
-          variant="contained"
-          type="submit"
-          sx={{
-            backgroundColor: "red",
-            "&: hover": {
-              backgroundColor: "#990000",
-            },
-            "&:active": {
-              backgroundColor: "green",
-            },
-            fontSize: "15px",
-          }}
-          fullWidth
-          onClick={(e) => handleLogin(e)}
-        >
-          Log In
-        </Button>
+        <div className={classes.buttonContainer}>
+          {loading ? (
+            <CircularProgress style={{"color": "#999"}} />
+          ) : (
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{
+                backgroundColor: "#b31726",
+                "&: hover": {
+                  backgroundColor: "#990000",
+                },
+                "&:active": {
+                  backgroundColor: "green",
+                },
+                fontSize: "15px",
+              }}
+              fullWidth
+              onClick={(e) => handleLogin(e)}
+            >
+              Log In
+            </Button>
+          )}
+        </div>
       </Paper>
     </Grid>
   );
