@@ -12,26 +12,28 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     maxWidth: drawerWidth + 20,
     flexShrink: 0,
+    backgroundColor: "#9a1421!important",
   },
   drawerPaper: {
-    color: "#ffffff",
-    backgroundColor: "#2D3446",
+    color: "red",
+    backgroundColor: "#999999!important",
     width: drawerWidth,
     maxWidth: drawerWidth + 20,
   },
   drawerHeader: {
     display: "flex",
     alignItems: "center",
+    backgroundColor: "#999999",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: "flex-end", //justifyContent: 'space-between',
   },
   drawerButtonIcon: {
-    color: "#ffffff",
+    color: "white",
   },
   helpIcon: {
-    color: "#ffffff",
+    color: "white",
   },
   options: {
     marginTop: "auto",
@@ -44,9 +46,6 @@ const useStyles = makeStyles((theme) => ({
 export default function NavDrawer({
   open,
   drawerList,
-  darkMode,
-  setDarkMode,
-  setLanguage,
   theme,
   handleDrawerClose,
 }) {
@@ -63,9 +62,6 @@ export default function NavDrawer({
       }}
     >
       <div className={classes.drawerHeader}>
-        {/* <IconButton onClick={() => window.open("help")}>
-            <HelpOutlineIcon className={classes.helpIcon}/>
-          </IconButton> */}
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "ltr" ? (
             <ChevronLeftIcon className={classes.drawerButtonIcon} />

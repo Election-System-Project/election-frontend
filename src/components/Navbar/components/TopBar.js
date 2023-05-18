@@ -11,7 +11,7 @@ import { Grid } from "@mui/material";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import SessionHelper from "../../../helpers/SessionHelper";
-import logo from "../../../assets/images/download.png";
+import logo from "../../../assets/images/uni_logo.jpg";
 
 const drawerWidth = 240;
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     fontFamily: theme.typography?.fontFamily?.Helvetica,
-    backgroundColor: "#1F2431",
+    backgroundColor: "#9a1421!important",
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer,
   },
   appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(100% - ${drawerWidth}px)!important`,
     marginLeft: drawerWidth,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
@@ -45,16 +45,19 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
   title: {
-    flexGrow: 1,
+    flexGrow: "1!important",
+    display: "flex",
+    alignItems: "center"
   },
   titleTypography: {
     textDecoration: "none",
-    color: "#FFFFFF",
+    // color: "#FFFFFF",
   },
   avatar: {
     margin: "0 auto",
     width: 120,
     height: "auto",
+    marginLeft: "2rem",
   },
   logoutButton: {
     border: "1px solid gray",
@@ -90,6 +93,7 @@ export default function TopBar({ open, handleDrawerOpen, logout }) {
           <a href="/dashboard">
             <img className={classes.avatar} alt={logo} src={logo} />
           </a>
+          <Typography style={{marginLeft: "1rem"}} variant="h5">IZTECH Election System</Typography>
         </Grid>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <Typography
