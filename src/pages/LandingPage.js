@@ -10,7 +10,7 @@ const LandingPage = (props) => {
     history.push("dashboard");
   } else history.push("login");
 
-  return <div>hıı</div>;
+  return <></>;
 };
 
 export default LandingPage;
