@@ -1,52 +1,9 @@
 import { Container, CssBaseline } from "@material-ui/core";
 import React from "react";
-import { useEffect, useState } from "react";
 import AnnouncementCard from "./components/AnnouncementCard";
+import data from "./Announcement";
+// import { useEffect, useState } from "react";
 
-const data = [
-  {
-    title: "General Announcements",
-    announcementList: [
-      {
-        id: 1,
-        announceTitle: "Announcement 1",
-        content: "This is the content of announcement 1"
-      },
-      {
-        id: 2,
-        announceTitle: "Announcement 2",
-        content: "This is the content of announcement 1"
-      },
-      {
-        id: 3,
-        announceTitle: "Announcement 3",
-        content: "This is the content of announcement 1"
-      }
-
-    ]
-  },
-  {
-    title: "Result Announcements",
-    announcementList: [
-      {
-        id: 1,
-        announceTitle: "Announcement 1",
-        content: "This is the content of announcement 1"
-      },
-      {
-        id: 2,
-        announceTitle: "Announcement 2",
-        content: "This is the content of announcement 1"
-      },
-      {
-        id: 3,
-        announceTitle: "Announcement 3",
-        content: "This is the content of announcement 1"
-      }
-
-    ]
-  }
-]
 
 function AnnouncementPage() {
 

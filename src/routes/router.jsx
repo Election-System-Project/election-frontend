@@ -21,6 +21,7 @@ const AnnouncementPage = lazy(() =>
 const AnnouncementDetailsPage = lazy(() =>
   import("../pages/AnnouncementPage/AnnouncementDetailsPage")
 );
+
 const NotFound = lazy(() => import("../components/NotFound"));
 
 const VotePage = lazy(() => import("../pages/VotePage/VotePage"));
@@ -39,8 +40,12 @@ const privateRoutes = [
     component: AnnouncementPage,
   },
   {
-    path: "/announcement/:id",
+    path: "/announcements/:id",
     component: AnnouncementDetailsPage,
+  },
+  {
+    path: "/announcements/create",
+    component: AnnouncementCreatePage,
   },
   {
     path: "/dashboard",
