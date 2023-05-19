@@ -14,7 +14,7 @@ import Loading from "../components/Loading";
 // lazy loading components for better performance
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
-const Dashboard = lazy(() => import("../pages/Dashboard"));
+const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
 const AnnouncementPage = lazy(() =>
   import("../pages/AnnouncementPage/AnnouncementPage")
 );
