@@ -1,5 +1,12 @@
 import React from "react";
-import { IconButton, Drawer, Divider, List, Typography, Link } from "@mui/material";
+import {
+  IconButton,
+  Drawer,
+  Divider,
+  List,
+  Typography,
+  Link,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -19,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#999999!important",
     width: drawerWidth,
     maxWidth: drawerWidth + 20,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   drawerHeader: {
     display: "flex",
@@ -45,14 +55,16 @@ const useStyles = makeStyles((theme) => ({
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        Iztech Election System
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <div style={{marginBottom: "1rem", color: "white"}}>
+      <Typography variant="body2"  align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="/">
+          Iztech Election System
+        </Link>{" "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    </div>
   );
 }
 
@@ -74,20 +86,22 @@ export default function NavDrawer({
         paper: classes.drawerPaper,
       }}
     >
-      <div className={classes.drawerHeader}>
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === "ltr" ? (
-            <ChevronLeftIcon className={classes.drawerButtonIcon} />
-          ) : (
-            <ChevronRightIcon />
-          )}
-        </IconButton>
+      <div>
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon className={classes.drawerButtonIcon} />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          <MenuItems drawerList={drawerList} />
+        </List>
       </div>
-      <Divider />
-      <List>
-        <MenuItems drawerList={drawerList} />
-        <Copyright />
-      </List>
+      <Copyright />
     </Drawer>
   );
 }

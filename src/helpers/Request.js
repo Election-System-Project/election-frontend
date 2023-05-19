@@ -13,6 +13,17 @@ const url = ""; // base url is not determined yet
  * @returns {obj} the json object
  */
 const Request = async (action, urlExtension, body, params, headers) => {
+  // check if user is logged in and session time is expired
+  if (SessionHelper.getUser()) {
+    if (isSessionTimeExpired()) {
+      window.location.href = "/login";
+      SessionHelper.deleteUser(); // logout
+      return;
+    } else {
+      SessionHelper.setLoginTime(); // set last request time
+    }
+  }
+
   let header = SessionHelper.getUser()
     ? {
         Authorization: "Bearer " + SessionHelper.getUser().accessToken,
@@ -86,5 +97,20 @@ export const RequestAll = async (requests) => {
     });
   return fetch;
 };
+
+function isSessionTimeExpired() {
+  let requestTime = new Date();
+  // difference between current request time and last request time
+  // https://stackoverflow.com/a/7709819
+  let sessionTime = new Date(SessionHelper.getLoginTime());
+  var diffMs = requestTime - sessionTime; // milliseconds
+  var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+
+  if (diffHrs >= 0.01) {
+    return true; // expired
+  } else {
+    return false; // not expired
+  }
+}
 
 export default Request;
