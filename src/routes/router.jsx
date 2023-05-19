@@ -17,6 +17,7 @@ const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementPage"));
 const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
+const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
 const NotFound = lazy(() => import("../components/NotFound"));
 
 
@@ -34,8 +35,12 @@ const publicRoutes = [
     component: AnnouncementPage,
   },
   {
-    path: "/announcement/:id",
+    path: "/announcements/:id",
     component: AnnouncementDetailsPage,
+  },
+  {
+    path: "/announcements/create",
+    component: AnnouncementCreatePage,
   },
   {
     path: "/dashboard",
@@ -111,7 +116,6 @@ export default function AppRoutes() {
               </Route>
             ))}
           </PrivateRoute>
-          {/* TODO: 404 page not work! */}
           <Route path="*" component={NotFound} />
         </Switch>
       </Suspense>

@@ -10,7 +10,7 @@ export default function AnnouncementItem({ value }) {
     // redirect to the announcement details page
     const redirect = () => {
         history.push({
-            pathname: `/announcement/${value.id}`,
+            pathname: `/announcements/${value.id}`,
             state: { announcement: value }
         });
     }
