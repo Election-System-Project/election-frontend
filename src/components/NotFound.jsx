@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import think from '../assets/images/think.png';
 
 export default function NotFound() {
+  console.log("mrjg");
   return (
     <Box
       sx={{
