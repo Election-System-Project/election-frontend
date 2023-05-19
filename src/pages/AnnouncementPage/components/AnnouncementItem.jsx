@@ -1,20 +1,20 @@
 import { Box, Icon, Typography, Link } from '@material-ui/core'
 import { MenuBook } from '@material-ui/icons'
 import React from 'react'
-// import { Link } from "react-router-native";
-
-var x = `asd{asdasd}`;
+import { useHistory } from 'react-router-dom'
 
 export default function AnnouncementItem({ value }) {
 
-    // adding a link to the announcement with replace white space with dash
-    const formattedTitle = value.announceTitle.replace(/\s+/g, "-");
-    const redirectURL = `/announcements/${formattedTitle}`;
+    const history = useHistory();
 
     // redirect to the announcement details page
     const redirect = () => {
-        
+        history.push({
+            pathname: `/announcement/${value.id}`,
+            state: { announcement: value }
+        });
     }
+
     return (
         <Box sx={{
             display: 'flex',
@@ -34,12 +34,11 @@ export default function AnnouncementItem({ value }) {
                 <Icon style={{ marginRight: '10px', marginBottom: '8px' }}>
                     <MenuBook />
                 </Icon>
-                <Link 
-                style={{
-                    textDecoration: 'none',
-                }} 
-                href= {redirectURL}
-                onClick={redirect}
+                <Link
+                    style={{
+                        textDecoration: 'none',
+                    }}
+                    onClick={redirect}
                 >
                     Read
                 </Link>
