@@ -1,9 +1,20 @@
 import { Box, Icon, Typography, Link } from '@material-ui/core'
 import { MenuBook } from '@material-ui/icons'
 import React from 'react'
-// import { Link } from "react-router-native";
+import { useHistory } from 'react-router-dom'
 
 export default function AnnouncementItem({ value }) {
+
+    const history = useHistory();
+
+    // redirect to the announcement details page
+    const redirect = () => {
+        history.push({
+            pathname: `/announcement/${value.id}`,
+            state: { announcement: value }
+        });
+    }
+
     return (
         <Box sx={{
             display: 'flex',
@@ -23,14 +34,17 @@ export default function AnnouncementItem({ value }) {
                 <Icon style={{ marginRight: '10px', marginBottom: '8px' }}>
                     <MenuBook />
                 </Icon>
-                <Link style={{
-                    textDecoration: 'none',
-                }} href='/announcements'>
+                <Link
+                    style={{
+                        textDecoration: 'none',
+                    }}
+                    onClick={redirect}
+                >
                     Read
                 </Link>
             </Box>
             <Typography variant="p">
-                {value}
+                {value.announceTitle}
             </Typography>
         </Box>
     )
