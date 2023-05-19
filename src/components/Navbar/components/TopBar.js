@@ -9,7 +9,7 @@ import { Grid } from "@mui/material";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import SessionHelper from "../../../helpers/SessionHelper";
-import logo from "../../../assets/images/uni_logo.jpg";
+import logo from "../../../assets/images/iyte-logo.png";
 
 const drawerWidth = 240;
 
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: "1!important",
     display: "flex",
-    alignItems: "center",
+    alignItems: "center"
   },
   titleTypography: {
     textDecoration: "none",

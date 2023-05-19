@@ -1,15 +1,13 @@
 import axios from "axios";
+import Request from "../helpers/Request";
 
 const API_URL = "/authcontroller";
 
 const login = async (email, password) => {
-  const res = await axios.post(API_URL + "/login", {
-    email,
-    password,
+  const res = await Request("post", API_URL + "/login", {
+    email: email,
+    password: password,
   });
-  if (res.content.token) {
-    localStorage.setItem("user", JSON.stringify(res.content));
-  }
   return res;
 };
 

@@ -71,7 +71,6 @@ const Navbar = React.memo(function Navbar({ component, drawerList }) {
   );
 
   // eslint-disable-next-line no-unused-vars
-  // const [languageState, setLanguage] = React.useState(LanguageHelper.getLanguage());
   const [open, setOpen] = useState(true);
 
   const init = useCallback(async () => {

@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import logo from "../assets/images/download.png";
 import { makeStyles } from "@mui/styles";
 import {
@@ -12,7 +13,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import authService from "../services/auth.service";
-import { useHistory } from "react-router-dom";
+import SessionHelper from "../helpers/SessionHelper";
 
 const useStyles = makeStyles({
   paperStyle: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Login() {
+export default function Login({ update, setUpdate }) {
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
@@ -53,7 +54,7 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
-    // const res = authService.login(email, password);  fix after backend deployment
+    // const res = authService.login(email, password);
     const res = {
       status: 200,
       content: {
@@ -62,19 +63,15 @@ export default function Login() {
         email: email,
       },
     };
-    console.log(res);
-
     if (res?.status === 200) {
       let data = res.content;
       console.log(data);
-      setTimeout(() => {
-        localStorage.setItem("user", JSON.stringify(res.content));
-
-        history?.location?.state
-          ? history.push(history?.location?.state?.from?.pathname)
-          : history.push("/dashboard");
-        setLoading(false);
-      }, 3000);
+      SessionHelper.setUser(data);
+      setUpdate(!update);
+      history?.location?.state
+        ? history.push(history?.location?.state?.from?.pathname)
+        : history.push("/dashboard");
+      setLoading(false);
     } else {
       // console.log(res?.data?.message);  fix after backend deployment
       console.log("error");
@@ -166,7 +163,7 @@ export default function Login() {
         />
         <div className={classes.buttonContainer}>
           {loading ? (
-            <CircularProgress style={{"color": "#999"}} />
+            <CircularProgress style={{ color: "#999" }} />
           ) : (
             <Button
               variant="contained"

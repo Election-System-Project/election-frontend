@@ -17,7 +17,7 @@ const VotePage = () => {
     { id: "example6", name: "Example 2" },
     { id: "example7", name: "Example 3" },
     { id: "example8", name: "Example 4" },
-    
+
   ];
 
   const handleRadioChange = (event) => {
@@ -37,19 +37,15 @@ const VotePage = () => {
             value={radioSelection}
             onChange={handleRadioChange}
             className="candidateList"
-            
+
           >
             <div className="scrollableList">
               {candidates.map((candidate) => (
                 <FormControlLabel
                   key={candidate.id}
                   value={candidate.id}
-                  control={<Radio color="success"/>}
+                  control={<Radio color="success" />}
                   label={candidate.name}
-                  
-                  
-
-            
                 />
               ))}
             </div>
@@ -66,7 +62,7 @@ const VotePage = () => {
               checked={radioSelection === "text"}
               onChange={handleRadioChange}
               color="success"
-              
+
             />
             <label htmlFor="text">I don't want to vote for anyone</label>
           </div>
