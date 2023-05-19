@@ -10,16 +10,18 @@ import SessionHelper from "../helpers/SessionHelper";
 import Navbar from "../components/Navbar/navbar";
 import Loading from "../components/Loading";
 
-
 // lazy loading components for better performance
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
-const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementPage"));
-const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
-const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
-const NotFound = lazy(() => import("../components/NotFound"));
+const AnnouncementPage = lazy(() =>
+  import("../pages/AnnouncementPage/AnnouncementPage")
+);
+const AnnouncementDetailsPage = lazy(() =>
+  import("../pages/AnnouncementPage/AnnouncementDetailsPage")
+);
 
+const NotFound = lazy(() => import("../components/NotFound"));
 
 const auth = [
   {
@@ -29,7 +31,7 @@ const auth = [
   },
 ];
 
-const publicRoutes = [
+const privateRoutes = [
   {
     path: "/announcements",
     component: AnnouncementPage,
@@ -95,28 +97,31 @@ export default function AppRoutes() {
     init();
   }, [init, user]);
 
+  const ProtectedRoutes = () => (
+    <Switch>
+      {privateRoutes.map((route, index) => (
+        <Route key={index} path={route.path} exact={route.exact}>
+          <Navbar drawerList={drawerList} component={<route.component />} />
+        </Route>
+      ))}
+      {/* Add the NotFound route here */}
+      <Route component={NotFound} />
+    </Switch>
+  );
+
   return (
     <Router>
       <Suspense fallback={Loading}>
         <Switch>
-          <Route path="/" exact component={LandingPage}></Route>
+          <Route path="/" exact component={LandingPage} />
           {auth.map((route, index) => (
             <Route key={index} path={route.path} exact={route.exact}>
               <route.component update={update} setUpdate={setUpdate} />
             </Route>
-
           ))}
           <PrivateRoute path="/">
-            {publicRoutes.map((route, index) => (
-              <Route key={index} path={route.path} exact={route.exact}>
-                <Navbar
-                  component={<route.component />}
-                  drawerList={drawerList}
-                />
-              </Route>
-            ))}
+            <ProtectedRoutes />
           </PrivateRoute>
-          <Route path="*" component={NotFound} />
         </Switch>
       </Suspense>
     </Router>
