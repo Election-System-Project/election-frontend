@@ -4,6 +4,7 @@
 class SessionHelper {
   user = null;
   isLoggedIn = false;
+  loginTime = null;
 
   /**
    * Sets the user data in the session as the user data saved in the local storage by the sign in component and sets the logged in state as true.
@@ -13,6 +14,7 @@ class SessionHelper {
     if (userInfo) {
       this.user = JSON.parse(userInfo);
       this.isLoggedIn = true;
+      this.loginTime = new Date();
     }
   }
 
@@ -22,17 +24,20 @@ class SessionHelper {
    */
   setUser(user) {
     this.user = user;
-    this.isLoggedIn = true;
-    localStorage.setItem("user", JSON.stringify(user));
+        this.isLoggedIn = true;
+        this.loginTime = new Date();
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('loginTime', this.loginTime);
   }
 
   /**
    * Removes the user data from the storage, clears the user data in the session and sets the logged in state as false.
    */
   deleteUser() {
-    localStorage.removeItem("user");
-    this.user = null;
-    this.isLoggedIn = false;
+    localStorage.removeItem('user');
+        this.user = null;
+        this.isLoggedIn = false;
+        this.loginTime = null;
   }
 
   /**
@@ -47,6 +52,15 @@ class SessionHelper {
    */
   getIsLoggedIn() {
     return this.isLoggedIn;
+  }
+
+  getLoginTime() {
+    return localStorage.getItem("loginTime");
+  }
+
+  setLoginTime() {
+    this.loginTime = new Date();
+    localStorage.setItem("loginTime", this.loginTime);
   }
 }
 

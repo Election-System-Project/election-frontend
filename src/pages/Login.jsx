@@ -18,7 +18,7 @@ import SessionHelper from "../helpers/SessionHelper";
 const useStyles = makeStyles({
   paperStyle: {
     padding: 20,
-    height: "65vh",
+    height: "70vh",
     width: 350,
     margin: "40px auto",
   },
@@ -30,16 +30,17 @@ const useStyles = makeStyles({
   title: {
     color: "#b31726",
     marginBottom: 0,
+    marginTop: "3.5rem"
   },
   altTitle: {
-    marginTop: 0,
+    margin: "0 auto",
     color: "#bdbfbe",
   },
   inputGrid: {
-    margin: "3rem auto 0.5rem",
+    margin: "1rem auto 0.5rem",
   },
   buttonContainer: {
-    marginTop: 40,
+    marginTop: 10,
     textAlign: "center",
   },
 });
@@ -93,9 +94,9 @@ export default function Login({ update, setUpdate }) {
             src={logo}
             style={{ width: 100, height: 100 }}
           ></Avatar>
-          <h4 className={classes.altText}>IZTECH Election System</h4>
+          <h5 className={classes.altText}>IZTECH Election System</h5>
           <h2 className={classes.title}>Log In</h2>
-          <h4 className={classes.altTitle}>Log in with your zimbra account</h4>
+          <h6 className={classes.altTitle}>Log in with your zimbra account</h6>
         </Grid>
         <Grid className={classes.inputGrid}>
           <TextField
@@ -159,6 +160,7 @@ export default function Login({ update, setUpdate }) {
               }}
             />
           }
+          style={{marginTop:20}}
           label="Remember me"
         />
         <div className={classes.buttonContainer}>
