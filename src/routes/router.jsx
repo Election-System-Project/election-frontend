@@ -8,6 +8,7 @@ import {
 import { getViewAuthorizationForAll } from "../helpers/AuthorizationHelper";
 import SessionHelper from "../helpers/SessionHelper";
 import Navbar from "../components/Navbar/navbar";
+import Loading from "../components/Loading";
 
 // lazy loading components for better performance
 const LandingPage = lazy(() => import("../pages/LandingPage"));
@@ -105,7 +106,7 @@ export default function AppRoutes() {
 
   return (
     <Router>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={Loading}>
         <Switch>
           <Route path="/" exact component={LandingPage} />
           {auth.map((route, index) => (
