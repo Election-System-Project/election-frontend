@@ -12,6 +12,7 @@ import AnnouncementPage from "../pages/AnnouncementPage";
 import Login from "../pages/Login";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/Dashboard";
+import VotePage from "../pages/VotePage/VotePage";
 
 const auth = [
   {
@@ -29,6 +30,10 @@ const publicRoutes = [
   {
     path: "/dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/vote",
+    component: VotePage,
   },
 ];
 
@@ -64,20 +69,7 @@ export default function AppRoutes() {
       let drawerList = [
         { label: "Dashboard", Path: "/dashboard" },
         { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
-        { label: "Announcements", Path: "/announcements" },
+        { label: "Vote", Path: "/vote" },
       ];
       setDrawerList(drawerList);
     }
