@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton, Drawer, Divider, List } from "@mui/material";
+import { IconButton, Drawer, Divider, List, Typography, Link } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -43,6 +43,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function Copyright() {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="/">
+        Iztech Election System
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
 export default function NavDrawer({
   open,
   drawerList,
@@ -73,6 +86,7 @@ export default function NavDrawer({
       <Divider />
       <List>
         <MenuItems drawerList={drawerList} />
+        <Copyright />
       </List>
     </Drawer>
   );
