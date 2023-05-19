@@ -8,18 +8,20 @@ import {
 import { getViewAuthorizationForAll } from "../helpers/AuthorizationHelper";
 import SessionHelper from "../helpers/SessionHelper";
 import Navbar from "../components/Navbar/navbar";
+import Loading from "../components/Loading";
+
 
 // lazy loading components for better performance
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
-const AnnouncementPage = lazy(() =>
-  import("../pages/AnnouncementPage/AnnouncementPage")
-);
-const AnnouncementDetailsPage = lazy(() =>
-  import("../pages/AnnouncementPage/AnnouncementDetailsPage")
-);
+const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementPage"));
+const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
+const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
+
 const NotFound = lazy(() => import("../components/NotFound"));
+
+const VotePage = lazy(() => import("../pages/VotePage/VotePage"));
 
 const auth = [
   {
@@ -31,16 +33,24 @@ const auth = [
 
 const privateRoutes = [
   {
+    path: "/announcements/:title/:id",
+    component: AnnouncementDetailsPage,
+  },
+  {
+    path: "/announcements/create",
+    component: AnnouncementCreatePage,
+  },
+  {
     path: "/announcements",
     component: AnnouncementPage,
   },
   {
-    path: "/announcement/:id",
-    component: AnnouncementDetailsPage,
-  },
-  {
     path: "/dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/vote",
+    component: VotePage,
   },
 ];
 
@@ -78,6 +88,7 @@ export default function AppRoutes() {
       let drawerList = [
         { label: "Dashboard", Path: "/dashboard" },
         { label: "Announcements", Path: "/announcements" },
+        { label: "Vote for Department Representatives", Path: "/vote" },
       ];
       setDrawerList(drawerList);
     }
@@ -98,14 +109,13 @@ export default function AppRoutes() {
           <Navbar drawerList={drawerList} component={<route.component />} />
         </Route>
       ))}
-      {/* Add the NotFound route here */}
       <Route component={NotFound} />
     </Switch>
   );
 
   return (
     <Router>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={Loading}>
         <Switch>
           <Route path="/" exact component={LandingPage} />
           {auth.map((route, index) => (
