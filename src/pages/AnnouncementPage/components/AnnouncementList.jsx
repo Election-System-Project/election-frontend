@@ -16,7 +16,7 @@ export default function AnnouncementList({ title, announcementList }) {
             <List>
                 {
                     announcementList.map((value, index) =>
-                        <AnnouncementItem value={value} key={index} />
+                        <AnnouncementItem type={title.toLowerCase()} value={value} key={index} />
                     )
                 }
             </List>
