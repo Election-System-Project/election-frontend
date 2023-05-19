@@ -14,12 +14,10 @@ const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const AnnouncementPage = lazy(() =>
- 
   import("../pages/AnnouncementPage/AnnouncementPage")
 );
 const AnnouncementDetailsPage = lazy(() =>
   import("../pages/AnnouncementPage/AnnouncementDetailsPage")
-
 );
 const NotFound = lazy(() => import("../components/NotFound"));
 
@@ -31,7 +29,6 @@ const auth = [
   },
 ];
 
-const privateRoutes = [
 const privateRoutes = [
   {
     path: "/announcements",
@@ -106,23 +103,10 @@ export default function AppRoutes() {
     </Switch>
   );
 
-  const ProtectedRoutes = () => (
-    <Switch>
-      {privateRoutes.map((route, index) => (
-        <Route key={index} path={route.path} exact={route.exact}>
-          <Navbar drawerList={drawerList} component={<route.component />} />
-        </Route>
-      ))}
-      {/* Add the NotFound route here */}
-      <Route component={NotFound} />
-    </Switch>
-  );
-
   return (
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
-          <Route path="/" exact component={LandingPage} />
           <Route path="/" exact component={LandingPage} />
           {auth.map((route, index) => (
             <Route key={index} path={route.path} exact={route.exact}>
@@ -130,7 +114,6 @@ export default function AppRoutes() {
             </Route>
           ))}
           <PrivateRoute path="/">
-            <ProtectedRoutes />
             <ProtectedRoutes />
           </PrivateRoute>
         </Switch>
