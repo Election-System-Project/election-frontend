@@ -1,18 +1,22 @@
-import React, { useCallback } from "react";
+import React, { useCallback, lazy, Suspense } from "react";
 import {
   Route,
   BrowserRouter as Router,
-  Routes,
   Switch,
   Redirect,
 } from "react-router-dom";
 import { getViewAuthorizationForAll } from "../helpers/AuthorizationHelper";
 import SessionHelper from "../helpers/SessionHelper";
 import Navbar from "../components/Navbar/navbar";
-import AnnouncementPage from "../pages/AnnouncementPage/AnnouncementPage";
-import Login from "../pages/Login";
-import LandingPage from "../pages/LandingPage";
-import Dashboard from "../pages/Dashboard";
+
+
+// lazy loading components for better performance
+const LandingPage = lazy(() => import("../pages/LandingPage"));
+const Login = lazy(() => import("../pages/Login"));
+const Dashboard = lazy(() => import("../pages/Dashboard"));
+const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementPage"));
+const NotFound = lazy(() => import("../components/NotFound"));
+
 
 const auth = [
   {
@@ -81,14 +85,15 @@ export default function AppRoutes() {
   }, [init, user]);
 
   return (
-    <div>
-      <Router>
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route path="/" exact component={LandingPage}></Route>
           {auth.map((route, index) => (
             <Route key={index} path={route.path} exact={route.exact}>
               <route.component update={update} setUpdate={setUpdate} />
             </Route>
+
           ))}
           <PrivateRoute path="/">
             {publicRoutes.map((route, index) => (
@@ -100,8 +105,12 @@ export default function AppRoutes() {
               </Route>
             ))}
           </PrivateRoute>
+          {/* TODO: 404 page not work! */}
+          <Route path="*">
+            <NotFound />
+          </Route>
         </Switch>
-      </Router>
-    </div>
+      </Suspense>
+    </Router>
   );
 }
