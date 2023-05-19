@@ -15,12 +15,10 @@ import Loading from "../components/Loading";
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
-const AnnouncementPage = lazy(() =>
-  import("../pages/AnnouncementPage/AnnouncementPage")
-);
-const AnnouncementDetailsPage = lazy(() =>
-  import("../pages/AnnouncementPage/AnnouncementDetailsPage")
-);
+const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementPage"));
+const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
+const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
+
 const NotFound = lazy(() => import("../components/NotFound"));
 
 const VotePage = lazy(() => import("../pages/VotePage/VotePage"));
@@ -35,12 +33,16 @@ const auth = [
 
 const privateRoutes = [
   {
-    path: "/announcements",
-    component: AnnouncementPage,
+    path: "/announcements/:title/:id",
+    component: AnnouncementDetailsPage,
   },
   {
-    path: "/announcement/:id",
-    component: AnnouncementDetailsPage,
+    path: "/announcements/create",
+    component: AnnouncementCreatePage,
+  },
+  {
+    path: "/announcements",
+    component: AnnouncementPage,
   },
   {
     path: "/dashboard",
@@ -107,7 +109,6 @@ export default function AppRoutes() {
           <Navbar drawerList={drawerList} component={<route.component />} />
         </Route>
       ))}
-      {/* Add the NotFound route here */}
       <Route component={NotFound} />
     </Switch>
   );
