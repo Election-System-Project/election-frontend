@@ -10,6 +10,7 @@ import SessionHelper from "../helpers/SessionHelper";
 import Navbar from "../components/Navbar/navbar";
 import Loading from "../components/Loading";
 
+
 // lazy loading components for better performance
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
@@ -21,6 +22,8 @@ const AnnouncementDetailsPage = lazy(() =>
   import("../pages/AnnouncementPage/AnnouncementDetailsPage")
 );
 const NotFound = lazy(() => import("../components/NotFound"));
+
+const VotePage = lazy(() => import("../pages/VotePage/VotePage"));
 
 const auth = [
   {
@@ -42,6 +45,10 @@ const privateRoutes = [
   {
     path: "/dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/vote",
+    component: VotePage,
   },
 ];
 
@@ -79,6 +86,7 @@ export default function AppRoutes() {
       let drawerList = [
         { label: "Dashboard", Path: "/dashboard" },
         { label: "Announcements", Path: "/announcements" },
+        { label: "Vote for Department Representatives", Path: "/vote" },
       ];
       setDrawerList(drawerList);
     }
