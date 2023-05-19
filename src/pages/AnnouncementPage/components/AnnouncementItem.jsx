@@ -3,16 +3,17 @@ import { MenuBook } from '@material-ui/icons'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
-export default function AnnouncementItem({ value }) {
+export default function AnnouncementItem({ value, type }) {
 
     const history = useHistory();
 
-    // redirect to the announcement details page
+    // redirect to the announcement details page when the user clicks on the read button
+    // if not, the user will be redirected to the announcement list page
     const redirect = () => {
-        history.push({
-            pathname: `/announcements/${value.id}`,
-            state: { announcement: value }
-        });
+        // reformats the title to lowercase and replaces the spaces with hyphens
+        const title = type.toLowerCase().replace(/\s/g, '-');
+        const path = `/announcements/${title}/${value.id}`;
+        history.push(path);
     }
 
     return (
