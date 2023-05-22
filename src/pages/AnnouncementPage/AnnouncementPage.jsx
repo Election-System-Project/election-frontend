@@ -8,17 +8,6 @@ import { AddCircleOutline } from "@material-ui/icons";
 
 
 function AnnouncementPage() {
-  const res = async () => {
-    const data = await Request(
-      "get",
-      "/announcementController/announcements/",
-      null
-    );
-    console.log(data);
-  };
-
-  res();
-
   const [data, setData] = useState([]);
 
   const init = useCallback(async () => {
@@ -66,8 +55,6 @@ function AnnouncementPage() {
             />
           );
         })}
-        {/* <AnnouncementCard title="General Announcements" announcementList={demoList} />
-        <AnnouncementCard title="Result Announcements" announcementList={demoList} /> */}
       </Container>
     </CssBaseline >
   );
