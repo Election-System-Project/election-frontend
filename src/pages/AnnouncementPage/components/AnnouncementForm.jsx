@@ -86,7 +86,6 @@ export default function AnnouncementForm() {
       content: description,
       announcement_type: announcementType
     };
-    console.log(data);
 
     const res = announcementService.createAnnouncement(data);
 
