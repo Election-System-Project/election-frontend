@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles';
 import { Alert, Box, Button, FormHelperText, MenuItem, TextField } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
+import announcementService from "../../../services/announcementService"
 
 const useStyles = makeStyles((theme) => ({
   inputControl: {
@@ -52,7 +53,7 @@ export default function AnnouncementForm() {
   const action = '/announcements/create';
 
   const history = useHistory();
-  
+
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [announcementType, setAnnouncementType] = React.useState('');
@@ -87,30 +88,16 @@ export default function AnnouncementForm() {
     };
     console.log(data);
 
-    fetch(action, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-      redirect: 'follow',
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
+    const res = announcementService.createAnnouncement(data);
+
+    if (!res) {
+      if (!res.status === 200) {
+        throw new Error("Failed to create announcement!");
       }
-      )
-      .then((result) => {
-        console.log(result);
-        history.push('/announcements');
-      }
-      )
-      .catch((error) => {
-        console.error('There has been a problem with your fetch operation:', error);
-      }
-      );
+    }
+    else {
+      history.push("/announcements");
+    }
 
   };
 
@@ -118,10 +105,10 @@ export default function AnnouncementForm() {
   return (
     <form action={action} method='POST' onSubmit={onSubmit} className={classes.form}>
       {
-      error && 
-      <Alert severity="error" style={{margin: '10px 10px', width: '40%',}}>
-        Please fill all the fields.
-      </Alert>
+        error &&
+        <Alert severity="error" style={{ margin: '10px 10px', width: '40%', }}>
+          Please fill all the fields.
+        </Alert>
       }
       <FormControl required className={classes.inputControl}>
         <Box

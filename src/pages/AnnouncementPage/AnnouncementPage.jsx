@@ -1,9 +1,11 @@
 import { Container, CssBaseline } from "@material-ui/core";
-import React from "react";
+import React, { useCallback } from "react";
 import AnnouncementCard from "./components/AnnouncementCard";
-import data from "./Announcement";
-import Request from "../../helpers/Request";
-// import { useEffect, useState } from "react";
+import announcementService from "../../services/announcementService";
+import { useEffect, useState } from "react";
+import { Button, Paper } from "@mui/material";
+import { AddCircleOutline } from "@material-ui/icons";
+
 
 function AnnouncementPage() {
   const res = async () => {
@@ -17,26 +19,46 @@ function AnnouncementPage() {
 
   res();
 
-  // const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  const init = useCallback(async () => {
+    announcementService.fetchData()
+      .then((res) => {
+        if (!res) {
+          if (!res.status === 200) {
+            throw new Error("Failed to get announcements");
+          }
+        }
+        else {
+          setData(res.data.array);
+        }
+      });
+  }, [])
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await fetch('/announcementController/announcements');
-  //     const jsonData = await response.json();
-  //     setData(jsonData);
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // };
+
+  useEffect(() => {
+    init();
+  }, [init]);
 
   return (
     <CssBaseline>
       <Container>
-        {data.map((value) => {
+        <Paper elevation={0} sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '80%',
+          margin: "0 auto",
+        }}>
+          <Button
+            variant="contained"
+            color="success" endIcon={<AddCircleOutline />}
+            sx={{ margin: '10px 10px', width: '20%' }}
+            href="/announcements/create"
+          >
+            Create
+          </Button>
+        </Paper>
+        {data && data.map((value) => {
           return (
             <AnnouncementCard
               title={value.title}
@@ -47,7 +69,7 @@ function AnnouncementPage() {
         {/* <AnnouncementCard title="General Announcements" announcementList={demoList} />
         <AnnouncementCard title="Result Announcements" announcementList={demoList} /> */}
       </Container>
-    </CssBaseline>
+    </CssBaseline >
   );
 }
 
