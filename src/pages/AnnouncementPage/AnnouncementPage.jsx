@@ -2,13 +2,22 @@ import { Container, CssBaseline } from "@material-ui/core";
 import React, { useCallback } from "react";
 import AnnouncementCard from "./components/AnnouncementCard";
 import announcementService from "../../services/announcementService";
-
 import { useEffect, useState } from "react";
 import { Button, Paper } from "@mui/material";
 import { AddCircleOutline } from "@material-ui/icons";
 
 
 function AnnouncementPage() {
+  const res = async () => {
+    const data = await Request(
+      "get",
+      "/announcementController/announcements/",
+      null
+    );
+    console.log(data);
+  };
+
+  res();
 
   const [data, setData] = useState([]);
 
@@ -51,8 +60,11 @@ function AnnouncementPage() {
         </Paper>
         {data && data.map((value) => {
           return (
-            <AnnouncementCard title={value.title} announcementList={value.announcementList} />
-          )
+            <AnnouncementCard
+              title={value.title}
+              announcementList={value.announcementList}
+            />
+          );
         })}
         {/* <AnnouncementCard title="General Announcements" announcementList={demoList} />
         <AnnouncementCard title="Result Announcements" announcementList={demoList} /> */}
