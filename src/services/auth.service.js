@@ -1,10 +1,8 @@
-import axios from "axios";
 import Request from "../helpers/Request";
 
-const API_URL = "/authcontroller";
-
+const API_URL = "/loginController"
 const login = async (email, password) => {
-  const res = await Request("post", API_URL + "/login", {
+  const res = await Request("post", API_URL + "/login/", {
     email: email,
     password: password,
   });

@@ -14,13 +14,14 @@ import {
 } from "@mui/material";
 import authService from "../services/auth.service";
 import SessionHelper from "../helpers/SessionHelper";
+import CustomSnackbar from "../components/Snackbar/Snackbar";
 
 const useStyles = makeStyles({
   paperStyle: {
     padding: 20,
     height: "70vh",
     width: 350,
-    margin: "40px auto",
+    margin: "100px auto",
   },
   altText: {
     margin: "0 auto",
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
   title: {
     color: "#b31726",
     marginBottom: 0,
-    marginTop: "3.5rem"
+    marginTop: "3.5rem",
   },
   altTitle: {
     margin: "0 auto",
@@ -50,22 +51,21 @@ export default function Login({ update, setUpdate }) {
   const [loading, setLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [snackbar, setSnackbar] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState("");
+  const [severity, setSeverity] = React.useState("info");
   const history = useHistory();
 
-  const handleLogin = (e) => {
+  // const regexRules =
+  //   /(?=.*[A-Z].*)(?=.*[a-z].*)(?=.*\d)(?=.*[!@#$%&*'(),\-+<=>:;?{}^._])[A-Za-z\d!@#$%&*'(),\-+<=>:;?{}^._]{8,32}$/;
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // const res = authService.login(email, password);
-    const res = {
-      status: 200,
-      content: {
-        name: "Sude Nur",
-        surname: "Çevik",
-        email: email,
-      },
-    };
+    const res = await authService.login(email, password);
+    console.log(res);
     if (res?.status === 200) {
-      let data = res.content;
+      let data = res?.data;
       console.log(data);
       SessionHelper.setUser(data);
       setUpdate(!update);
@@ -74,13 +74,19 @@ export default function Login({ update, setUpdate }) {
         : history.push("/dashboard");
       setLoading(false);
     } else {
-      // console.log(res?.data?.message);  fix after backend deployment
-      console.log("error");
+      setSnackbarMessage(res?.data?.error_message);
+      setSnackbar(true);
+      setSeverity("error");
     }
   };
-
   return (
     <Grid>
+      <CustomSnackbar
+        snackbar={snackbar}
+        setSnackbar={setSnackbar}
+        snackbarMessage={snackbarMessage}
+        severity={severity}
+      />
       <Paper
         elevation={10}
         className={classes.paperStyle}
@@ -160,7 +166,7 @@ export default function Login({ update, setUpdate }) {
               }}
             />
           }
-          style={{marginTop:20}}
+          style={{ marginTop: 20 }}
           label="Remember me"
         />
         <div className={classes.buttonContainer}>
@@ -181,7 +187,24 @@ export default function Login({ update, setUpdate }) {
                 fontSize: "15px",
               }}
               fullWidth
-              onClick={(e) => handleLogin(e)}
+              onClick={(e) => {
+                if (email === "") {
+                  setSnackbarMessage("Please enter your email");
+                  setSnackbar(true);
+                } else if (password === "") {
+                  setSnackbarMessage("Please enter your password");
+                  setSnackbar(true);
+                } else {
+                  // let re =
+                  //   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                  // if (re.test(password)) {
+                    handleLogin(e);
+                  // } else {
+                  //   setSnackbar(true);
+                  //   setSnackbarMessage("This is an invalid password");
+                  // }
+                }
+              }}
             >
               Log In
             </Button>

@@ -2,10 +2,20 @@ import { Container, CssBaseline } from "@material-ui/core";
 import React from "react";
 import AnnouncementCard from "./components/AnnouncementCard";
 import data from "./Announcement";
+import Request from "../../helpers/Request";
 // import { useEffect, useState } from "react";
 
-
 function AnnouncementPage() {
+  const res = async () => {
+    const data = await Request(
+      "get",
+      "/announcementController/announcements/",
+      null
+    );
+    console.log(data);
+  };
+
+  res();
 
   // const [data, setData] = useState(null);
 
@@ -28,8 +38,11 @@ function AnnouncementPage() {
       <Container>
         {data.map((value) => {
           return (
-            <AnnouncementCard title={value.title} announcementList={value.announcementList} />
-          )
+            <AnnouncementCard
+              title={value.title}
+              announcementList={value.announcementList}
+            />
+          );
         })}
         {/* <AnnouncementCard title="General Announcements" announcementList={demoList} />
         <AnnouncementCard title="Result Announcements" announcementList={demoList} /> */}
