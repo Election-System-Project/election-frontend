@@ -20,7 +20,6 @@ const style = makeStyles((theme) => ({
   },
 }));
 
-
 function AnnouncementPage() {
   const classes = style();
   const [data, setData] = useState([]);
@@ -106,8 +105,17 @@ function AnnouncementPage() {
             />
           );
         })}
+        {data &&
+          data.map((value) => {
+            return (
+              <AnnouncementCard
+                title={value.title}
+                announcementList={value.announcementList}
+              />
+            );
+          })}
       </Container>
-    </CssBaseline >
+    </CssBaseline>
   );
 }
 
