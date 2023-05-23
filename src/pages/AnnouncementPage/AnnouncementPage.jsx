@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Button, Paper } from "@mui/material";
 import { AddCircleOutline } from "@material-ui/icons";
 import NoData from "../../components/NoData";
+import { useLocation } from 'react-router-dom';
 
 const style = makeStyles((theme) => ({
   paper: {
@@ -29,24 +30,26 @@ function AnnouncementPage() {
   const isAdmin = roles?.includes("Admin");
   const isDeansOffice = roles?.includes("DeansOffice");
 
-  const init = useCallback(async () => {
-    await announcementService.fetchData()
-      .then((res) => {
-        if (!res) {
-          if (!res.status === 200) {
-            throw new Error("Failed to get announcements");
-          }
-        }
-        else {
-          setData(res.data.array);
-        }
-      });
-  }, [])
+  const location = useLocation();
 
+  const fetchData = useCallback(async () => {
+    await announcementService.fetchData().then((res) => {
+      if (!res || res.status !== 200) {
+        throw new Error("Failed to get announcements");
+      }
+      setData(res.data.array);
+    });
+  }, []);
 
   useEffect(() => {
-    init();
-  }, [init]);
+    fetchData();
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (location.state && location.state.refresh) {
+      fetchData();
+    }
+  }, [fetchData, location.state]);
 
   return (
     <CssBaseline>
@@ -66,9 +69,11 @@ function AnnouncementPage() {
             </Button>
           )}
         </Paper>
-        {data.length !== 0 && data.map((value) => {
+        {data.length !== 0 && 
+        data.map((value, index) => {
           return (
             <AnnouncementCard
+              key={index}
               title={value.title}
               announcementList={value.announcementList}
             />
