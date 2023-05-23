@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import AnnouncementDetailsItem from './components/AnnouncementDetailsItem'
 import { Container, CssBaseline } from '@material-ui/core';
-import data from './Announcement';
+import AnnouncementDetailsItem from './components/AnnouncementDetailsItem'
+import announcementService from '../../services/announcementService';
 import NotFound from '../../components/NotFound';
 
 export default function AnnouncementDetailsPage() {
@@ -11,6 +11,9 @@ export default function AnnouncementDetailsPage() {
 
     // reformats the title to lowercase and replaces the hyphens with spaces
     const newTitle = title.toLowerCase().replace(/-/g, ' ');
+
+    // fetch the data from the announcement service
+    const data = announcementService.fetchData();
 
     // get the announcement from the announcement list by id
     const announcement = data.find(announcement => announcement.title.toLowerCase() === newTitle)
