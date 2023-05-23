@@ -13,22 +13,6 @@ const VotePage = () => {
   useEffect(() => { init() }, [init])
 
 
-  // const candidates = [
-  //   { id: "gorkem", name: "Görkem Giray" },
-  //   { id: "onur", name: "Onur Demirörs" },
-  //   { id: "soylu", name: "Görkem Soylu" },
-  //   { id: "example1", name: "Example 1" },
-  //   { id: "example2", name: "Example 2" },
-  //   { id: "example3", name: "Example 3" },
-  //   { id: "example4", name: "Example 4" },
-  //   { id: "example5", name: "Example 1" },
-  //   { id: "example6", name: "Example 2" },
-  //   { id: "example7", name: "Example 3" },
-  //   { id: "example8", name: "Example 4" },
-
-  // ];
-
-
   const handleRadioChange = (event) => {
     console.log(event.target.value);
     setRadioSelection(event.target.value);
@@ -60,7 +44,7 @@ const VotePage = () => {
               {candidates.map((candidate, index) => (
                 <FormControlLabel
                   key={index}
-                  value={candidate.name + " " + candidate.surname}
+                  value={candidate.student_id}
                   control={<Radio color="success" />}
                   label={candidate.name + " " + candidate.surname}
                 />
@@ -73,10 +57,10 @@ const VotePage = () => {
           <div className="mainSubmitRadio">
             <Radio
               id="text"
-              value="empty"
+              value="-1"
               name="content"
               className="secondRadio"
-              checked={radioSelection === "empty"}
+              checked={radioSelection === "-1"}
               onChange={handleRadioChange}
               color="success"
 
