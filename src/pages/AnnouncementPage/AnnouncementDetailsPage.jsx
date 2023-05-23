@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import AnnouncementDetailsItem from './components/AnnouncementDetailsItem'
 import { Container, CssBaseline } from '@material-ui/core';
-import data from './Announcement';
+import data from './AnnouncementPage';
 import NotFound from '../../components/NotFound';
 
 export default function AnnouncementDetailsPage() {

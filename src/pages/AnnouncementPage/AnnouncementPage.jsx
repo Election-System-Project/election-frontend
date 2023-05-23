@@ -6,24 +6,20 @@ import { useEffect, useState } from "react";
 import { Button, Paper } from "@mui/material";
 import { AddCircleOutline } from "@material-ui/icons";
 
-
 function AnnouncementPage() {
   const [data, setData] = useState([]);
 
   const init = useCallback(async () => {
-    announcementService.fetchData()
-      .then((res) => {
-        if (!res) {
-          if (!res.status === 200) {
-            throw new Error("Failed to get announcements");
-          }
+    announcementService.fetchData().then((res) => {
+      if (!res) {
+        if (!res.status === 200) {
+          throw new Error("Failed to get announcements");
         }
-        else {
-          setData(res.data.array);
-        }
-      });
-  }, [])
-
+      } else {
+        setData(res.data.array);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     init();
@@ -32,31 +28,36 @@ function AnnouncementPage() {
   return (
     <CssBaseline>
       <Container>
-        <Paper elevation={0} sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          width: '80%',
-          margin: "0 auto",
-        }}>
+        <Paper
+          elevation={0}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            width: "80%",
+            margin: "0 auto",
+          }}
+        >
           <Button
             variant="contained"
-            color="success" endIcon={<AddCircleOutline />}
-            sx={{ margin: '10px 10px', width: '20%' }}
+            color="success"
+            endIcon={<AddCircleOutline />}
+            sx={{ margin: "10px 10px", width: "20%" }}
             href="/announcements/create"
           >
             Create
           </Button>
         </Paper>
-        {data && data.map((value) => {
-          return (
-            <AnnouncementCard
-              title={value.title}
-              announcementList={value.announcementList}
-            />
-          );
-        })}
+        {data &&
+          data.map((value) => {
+            return (
+              <AnnouncementCard
+                title={value.title}
+                announcementList={value.announcementList}
+              />
+            );
+          })}
       </Container>
-    </CssBaseline >
+    </CssBaseline>
   );
 }
 

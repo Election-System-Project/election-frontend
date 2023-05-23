@@ -2,7 +2,7 @@ import axios from "axios";
 import SessionHelper from "./SessionHelper";
 
 const url = "https://4cfa-31-142-106-235.ngrok-free.app"; // base url is not determined yet
-const loginUrl = "https://2ac45b94-be4a-4a5b-bfd9-8ee6a2e19c95.mock.pstmn.io";
+const loginUrl = "https://2ac45b94-be4a-4a5b-bfd9-8ee6a2e19c95.mock.pstmn.io"; //mockapi
 
 /**
  * Manages the requests made to the REST api.
@@ -35,9 +35,10 @@ const Request = async (action, urlExtension, body, params, headers) => {
     header = { ...header, ...headers };
   }
   let fetch;
-  // console.log(urlExtension);
+  console.log(urlExtension);
   let new_url = url + urlExtension;
-  if ("/loginController/login/") {
+
+  if (urlExtension === "/loginController/login/") {
     new_url = loginUrl + urlExtension;
   }
   await axios({
