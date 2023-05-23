@@ -1,6 +1,7 @@
 import Request from "../helpers/Request";
 
 const API_URL = "/loginController"
+
 const login = async (email, password) => {
   const res = await Request("post", API_URL + "/login/", {
     email: email,
