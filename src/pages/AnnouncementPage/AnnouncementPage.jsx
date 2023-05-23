@@ -2,10 +2,11 @@ import { Container, CssBaseline, makeStyles } from "@material-ui/core";
 import React, { useCallback } from "react";
 import AnnouncementCard from "./components/AnnouncementCard";
 import announcementService from "../../services/announcementService";
+import SessionHelper from "../../helpers/SessionHelper";
 import { useEffect, useState } from "react";
 import { Button, Paper } from "@mui/material";
 import { AddCircleOutline } from "@material-ui/icons";
-import AnnouncementAdapter from "../../adapters/AnnouncementAdapter";
+import NoData from "../../components/NoData";
 
 const style = makeStyles((theme) => ({
   paper: {
@@ -24,56 +25,22 @@ function AnnouncementPage() {
   const classes = style();
   const [data, setData] = useState([]);
 
-  //////
-  const announcement = [
-    {
-      title: "General Announcements",
-      announcementList: [
-        {
-          id: 1,
-          announceTitle: "Announcement 1",
-          content: "This is the content of announcement 1"
-        },
-        {
-          id: 2,
-          announceTitle: "Announcement 2",
-          content: "This is the content of announcement 1"
-        },
-        {
-          id: 3,
-          announceTitle: "Announcement 3",
-          content: "This is the content of announcement 1"
-        }
+  const roles = SessionHelper.getUser().roles;
+  const isAdmin = roles?.includes("Admin");
+  const isDeansOffice = roles?.includes("DeansOffice");
 
-      ]
-    },
-    {
-      title: "Result Announcements",
-      announcementList: [
-        {
-          id: 1,
-          announceTitle: "Announcement 1",
-          content: "This is the content of announcement 1"
-        },
-        {
-          id: 2,
-          announceTitle: "Announcement 2",
-          content: "This is the content of announcement 1"
-        },
-        {
-          id: 3,
-          announceTitle: "Announcement 3",
-          content: "This is the content of announcement 1"
-        }
-
-      ]
-    }
-  ]
-
-  //////
   const init = useCallback(async () => {
-    const response = await AnnouncementAdapter.getAnnouncements();
-    setData(response);
+    await announcementService.fetchData()
+      .then((res) => {
+        if (!res) {
+          if (!res.status === 200) {
+            throw new Error("Failed to get announcements");
+          }
+        }
+        else {
+          setData(res.data.array);
+        }
+      });
   }, [])
 
 
@@ -84,20 +51,22 @@ function AnnouncementPage() {
   return (
     <CssBaseline>
       <Container>
-        <Paper 
-        elevation={0} 
-        className={classes.paper}
+        <Paper
+          elevation={0}
+          className={classes.paper}
         >
-          <Button
-            variant="contained"
-            color="success" endIcon={<AddCircleOutline />}
-            className={classes.button}
-            href="/announcements/create"
-          >
-            Create
-          </Button>
+          { data.length !== 0 && (isAdmin || isDeansOffice) && (
+            <Button
+              variant="contained"
+              color="success" endIcon={<AddCircleOutline />}
+              className={classes.button}
+              href="/announcements/create"
+            >
+              Create
+            </Button>
+          )}
         </Paper>
-        {announcement && announcement.map((value) => {
+        {data.length !== 0 && data.map((value) => {
           return (
             <AnnouncementCard
               title={value.title}
@@ -105,15 +74,7 @@ function AnnouncementPage() {
             />
           );
         })}
-        {data &&
-          data.map((value) => {
-            return (
-              <AnnouncementCard
-                title={value.title}
-                announcementList={value.announcementList}
-              />
-            );
-          })}
+        {data.length === 0 && <NoData />}
       </Container>
     </CssBaseline>
   );
