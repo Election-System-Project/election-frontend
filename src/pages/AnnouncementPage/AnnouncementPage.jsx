@@ -1,7 +1,7 @@
 import { Container, CssBaseline, makeStyles } from "@material-ui/core";
 import React, { useCallback } from "react";
 import AnnouncementCard from "./components/AnnouncementCard";
-import announcementService from "../../services/announcementService";
+import announcementService from "../../services/announcement.service";
 import SessionHelper from "../../helpers/SessionHelper";
 import { useEffect, useState } from "react";
 import { Button, Paper } from "@mui/material";
@@ -23,7 +23,32 @@ const style = makeStyles((theme) => ({
 }));
 
 function AnnouncementPage() {
+  
+  const f = [
+    {
+      title: "Announcements",
+      announcementList: [
+        {
+          id: 1,
+          announceTitle: "Announcement 1",
+          announceContent: "Announcement 1 Content",
+        },
+        {
+          id: 2,
+          announceTitle: "Announcement 2",
+          announceContent: "Announcement 2 Content",
+        },
+        {
+          id: 3,
+          announceTitle: "Announcement 3",
+          announceContent: "Announcement 3 Content",
+        },
+      ]
+    }
+  ]
+  
   const classes = style();
+
   const [data, setData] = useState([]);
 
   const roles = SessionHelper.getUser().roles;
@@ -69,8 +94,8 @@ function AnnouncementPage() {
             </Button>
           )}
         </Paper>
-        {data.length !== 0 && 
-        data.map((value, index) => {
+        {f.length !== 0 && 
+        f.map((value, index) => {
           return (
             <AnnouncementCard
               key={index}
