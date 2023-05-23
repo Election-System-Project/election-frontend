@@ -71,7 +71,7 @@ export default function AnnouncementForm() {
     setDescription(event.target.value);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
 
     if (title === '' || description === '' || announcementType === '') {
@@ -87,15 +87,18 @@ export default function AnnouncementForm() {
       announcement_type: announcementType
     };
 
-    const res = announcementService.createAnnouncement(data);
-
-    if (!res) {
-      if (!res.status === 200) {
+    try {
+      const res = await announcementService.createAnnouncement(data);
+      console.log(res);
+      if (res && res.status === 201) {
+        // Item created successfully
+        history.push("/announcements", {refresh: true});
+      } else {
         throw new Error("Failed to create announcement!");
       }
-    }
-    else {
-      history.push("/announcements");
+    } catch (error) {
+      console.error(error);
+      // Handle error
     }
 
   };
