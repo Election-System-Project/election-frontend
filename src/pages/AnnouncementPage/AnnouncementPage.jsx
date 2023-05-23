@@ -24,28 +24,28 @@ const style = makeStyles((theme) => ({
 
 function AnnouncementPage() {
   
-  const f = [
-    {
-      title: "Announcements",
-      announcementList: [
-        {
-          id: 1,
-          announceTitle: "Announcement 1",
-          announceContent: "Announcement 1 Content",
-        },
-        {
-          id: 2,
-          announceTitle: "Announcement 2",
-          announceContent: "Announcement 2 Content",
-        },
-        {
-          id: 3,
-          announceTitle: "Announcement 3",
-          announceContent: "Announcement 3 Content",
-        },
-      ]
-    }
-  ]
+  // const f = [
+  //   {
+  //     title: "Announcements",
+  //     announcementList: [
+  //       {
+  //         id: 1,
+  //         announceTitle: "Announcement 1",
+  //         announceContent: "Announcement 1 Content",
+  //       },
+  //       {
+  //         id: 2,
+  //         announceTitle: "Announcement 2",
+  //         announceContent: "Announcement 2 Content",
+  //       },
+  //       {
+  //         id: 3,
+  //         announceTitle: "Announcement 3",
+  //         announceContent: "Announcement 3 Content",
+  //       },
+  //     ]
+  //   }
+  // ]
   
   const classes = style();
 
@@ -94,8 +94,8 @@ function AnnouncementPage() {
             </Button>
           )}
         </Paper>
-        {f.length !== 0 && 
-        f.map((value, index) => {
+        {data.length !== 0 && 
+        data.map((value, index) => {
           return (
             <AnnouncementCard
               key={index}
