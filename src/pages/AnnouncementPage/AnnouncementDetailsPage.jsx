@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, CssBaseline } from '@material-ui/core';
 import AnnouncementDetailsItem from './components/AnnouncementDetailsItem'
-import announcementService from '../../services/announcementService';
+import announcementService from '../../services/announcement.service';
 import NotFound from '../../components/NotFound';
 
 export default function AnnouncementDetailsPage() {

@@ -15,8 +15,8 @@ export default function AnnouncementList({ title, announcementList }) {
             <Divider />
             <List>
                 {
-                    announcementList.map((value, index) =>
-                        <AnnouncementItem type={title.toLowerCase()} value={value} key={index} />
+                    announcementList.map((value) =>
+                        <AnnouncementItem type={title.toLowerCase()} value={value} key={value.id} id={value.id} />
                     )
                 }
             </List>

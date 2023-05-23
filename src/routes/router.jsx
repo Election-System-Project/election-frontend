@@ -36,6 +36,10 @@ const privateRoutes = [
     component: AnnouncementDetailsPage,
   },
   {
+    path: "/announcements/delete/:id",
+    component: AnnouncementCreatePage,
+  },
+  {
     path: "/announcements/create",
     component: AnnouncementCreatePage,
   },

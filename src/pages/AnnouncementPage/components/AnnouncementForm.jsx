@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 import { Alert, Box, Button, FormHelperText, MenuItem, TextField } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
-import announcementService from "../../../services/announcementService"
+import announcementService from "../../../services/announcement.service"
 
 const useStyles = makeStyles((theme) => ({
   inputControl: {
