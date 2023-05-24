@@ -5,9 +5,13 @@ import announcementService from "../../services/announcementService";
 import { useEffect, useState } from "react";
 import { Button, Paper } from "@mui/material";
 import { AddCircleOutline } from "@material-ui/icons";
+import SessionHelper from "../../helpers/SessionHelper";
 
 function AnnouncementPage() {
   const [data, setData] = useState([]);
+  const roles = SessionHelper.getUser().roles;
+  const isAdmin = roles?.includes("Admin");
+  const isDeansOffice = roles?.includes("DeansOffice");
 
   const init = useCallback(async () => {
     announcementService.fetchData().then((res) => {
@@ -37,6 +41,7 @@ function AnnouncementPage() {
             margin: "0 auto",
           }}
         >
+          {(isAdmin || isDeansOffice) && (
           <Button
             variant="contained"
             color="success"
@@ -46,6 +51,7 @@ function AnnouncementPage() {
           >
             Create
           </Button>
+          )}
         </Paper>
         {data &&
           data.map((value) => {

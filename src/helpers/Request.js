@@ -1,7 +1,7 @@
 import axios from "axios";
 import SessionHelper from "./SessionHelper";
 
-const url = "https://4cfa-31-142-106-235.ngrok-free.app"; // base url is not determined yet
+const url = "https://e84f-77-67-158-76.ngrok-free.app"; // base url is not determined yet
 const loginUrl = "https://2ac45b94-be4a-4a5b-bfd9-8ee6a2e19c95.mock.pstmn.io"; //mockapi
 
 /**
