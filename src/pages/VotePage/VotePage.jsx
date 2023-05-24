@@ -22,6 +22,9 @@ const VotePage = () => {
     e.preventDefault();
     console.log(radioSelection);
     const res = await voteService.vote(radioSelection);
+    if(res.status===200){
+      window.location="/dashboard"
+    }
     console.log(res);
   }
 
