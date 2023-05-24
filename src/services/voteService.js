@@ -8,9 +8,9 @@ const fetchUser = async () => {
     return res;
 }
 
-const vote = async (name) => {
+const vote = async (id) => {
     const res = await Request("post", "/voteController/addvote/", {
-      candidate_name: name,
+      student_id: id,
     });
     return res;
   };
