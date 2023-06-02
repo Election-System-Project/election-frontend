@@ -1,10 +1,14 @@
-import { Box, Icon, Typography, Link, makeStyles } from '@material-ui/core'
-import { MenuBook } from '@material-ui/icons'
-import Checkbox from '@mui/material/Checkbox';
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import announcementService from '../../../services/announcement.service'
+import { Box, Icon, Link, makeStyles } from '@material-ui/core';
+import { MenuBook } from '@material-ui/icons';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import SessionHelper from "../../../helpers/SessionHelper";
+import announcementService from '../../../services/announcement.service';
+
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 
 const styles = makeStyles((theme) => ({
     box: {
@@ -42,8 +46,6 @@ const styles = makeStyles((theme) => ({
 
 export default function AnnouncementItem({ id, value, type }) {
 
-    const [checked, setChecked] = React.useState(false);
-
     const history = useHistory();
     const classes = styles();
 
@@ -79,43 +81,35 @@ export default function AnnouncementItem({ id, value, type }) {
         <Box
             className={classes.box}
         >
-            <Box
-                className={classes.readBox}
-            >
-                <Icon
-                    className={classes.icon}
-                >
-                    <MenuBook />
-                </Icon>
-                <Link
-                    className={classes.link}
-                    onClick={redirect}
-                >
-                    Read
-                </Link>
-            </Box>
-            <Typography variant="p">
-                {value.announceTitle}
-            </Typography>
             {
-                (isAdmin || isDeansOffice) &&
-                <Box
-                    className={classes.checkBox}
+                <ListItem
+                    secondaryAction={ 
+                        isAdmin || isDeansOffice ?
+                        <IconButton edge="end" aria-label="delete" onClick={() => handleChange(id)} >
+                            <DeleteIcon />
+                        </IconButton> : null
+                    }
                 >
-                    <Checkbox
-                        checked={checked}
-                        onChange={() => {
-                            setChecked(!checked);
-                            handleChange(id);
-                        }}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        sx={{
-                            "&.Mui-checked": {
-                                color: "#9a1421"
-                            }
-                        }}
+                    <Box
+                        className={classes.readBox}
+                    >
+                        <Icon
+                            className={classes.icon}
+                        >
+                            <MenuBook />
+                        </Icon>
+                        <Link
+                            className={classes.link}
+                            onClick={redirect}
+                        >
+                            Read
+                        </Link>
+                    </Box>
+
+                    <ListItemText
+                        primary={value.announceTitle}
                     />
-                </Box>
+                </ListItem>
             }
         </Box>
     )
