@@ -14,6 +14,7 @@ import Loading from "../components/Loading";
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
+const Status = lazy(() => import("../pages/StatusPage/StatusPage"));
 const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementPage"));
 const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
 const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
@@ -67,6 +68,11 @@ const privateRoutes = [
     component: VotePage,
     exact: true
   },
+  {
+    path: "/status",
+    component: Status,
+    exact: true
+  }
 ];
 
 function PrivateRoute({ children, ...rest }) {
@@ -105,6 +111,7 @@ export default function AppRoutes() {
         { label: "Announcements", Path: "/announcements" },
         { label: "Vote for Department Representatives", Path: "/vote" },
         { label: "Result Approvement", Path: "/approvements/result" },
+        { label: "Candidate Status", Path: "/status"}
       ];
       setDrawerList(drawerList);
     }
