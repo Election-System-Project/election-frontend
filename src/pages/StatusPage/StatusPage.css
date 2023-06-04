@@ -1,0 +1,17 @@
+#wholePage {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color:rgb(215, 215, 215);
+    border-radius: 10px;
+}
+
+#table-responsive {
+    overflow: scroll;
+}
+th, thead{
+    position: sticky;
+    top: 0;
+    text-align: center;
+}
+tr {
+    text-align: center;
+}
