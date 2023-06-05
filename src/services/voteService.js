@@ -22,6 +22,8 @@ const vote = async (id) => {
 
 
 
+
+
 const voteService={fetchUser,vote}
 
 export  default voteService;

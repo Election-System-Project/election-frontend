@@ -18,6 +18,7 @@ const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/Announceme
 const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
 const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
 const ResultApprovementPage = lazy(() => import("../pages/ResultApprovementPage/ResultApprovementPage"));
+const ApplicationApprovementPage = lazy(() => import("../pages/ApplicationApprovementPage/ApplicationApprovementPage"));
 
 const NotFound = lazy(() => import("../components/NotFound"));
 
@@ -55,6 +56,11 @@ const privateRoutes = [
   {
     path: "/approvements/result",
     component: ResultApprovementPage,
+    exact: true
+  },
+  {
+    path: "/approvements/application",
+    component: ApplicationApprovementPage,
     exact: true
   },
   {
@@ -105,6 +111,7 @@ export default function AppRoutes() {
         { label: "Announcements", Path: "/announcements" },
         { label: "Vote for Department Representatives", Path: "/vote" },
         { label: "Result Approvement", Path: "/approvements/result" },
+        { label: "Application Approvement", Path: "/approvements/application" },
       ];
       setDrawerList(drawerList);
     }
