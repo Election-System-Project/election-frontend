@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Button, Container, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import think from '../assets/images/think.png';
+import SendIcon from '@mui/icons-material/Send';
 
 export default function NotFound() {
   console.log("mrjg");
@@ -34,8 +35,15 @@ export default function NotFound() {
             }}>
               The page you’re looking for doesn’t exist or an another error occured.
             </Typography>
-            <Button variant="contained" href='/' sx= {{
+            <Button variant="contained" href='/' endIcon={<SendIcon />} sx= {{
               marginTop: '20px',
+              padding: "10px 15px",
+              backgroundColor: "#9a1421",
+              color: "#fff",
+              ":hover": {
+                backgroundColor: "#fff",
+                color: "#9a1421"
+              }
             }}>Go Back Home</Button>
           </Grid>
           <Grid xs={6}>
