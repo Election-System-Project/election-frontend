@@ -23,7 +23,7 @@ const style = makeStyles((theme) => ({
 }));
 
 function AnnouncementPage() {
-  
+
   // const f = [
   //   {
   //     title: "Announcements",
@@ -46,7 +46,7 @@ function AnnouncementPage() {
   //     ]
   //   }
   // ]
-  
+
   const classes = style();
 
   const [data, setData] = useState([]);
@@ -83,28 +83,34 @@ function AnnouncementPage() {
           elevation={0}
           className={classes.paper}
         >
-          { data.length !== 0 && (isAdmin || isDeansOffice) && (
-            <Button
-              variant="contained"
-              color="success" endIcon={<AddCircleOutline />}
-              className={classes.button}
-              href="/announcements/create"
-            >
-              Create
-            </Button>
-          )}
+          {
+            data.length !== 0 && (isAdmin || isDeansOffice) && (
+              <Button
+                variant="contained"
+                color="success" endIcon={<AddCircleOutline />}
+                className={classes.button}
+                href="/announcements/create"
+              >
+                Create
+              </Button>
+            )
+          }
         </Paper>
-        {data.length !== 0 && 
-        data.map((value, index) => {
-          return (
-            <AnnouncementCard
-              key={index}
-              title={value.title}
-              announcementList={value.announcementList}
-            />
-          );
-        })}
-        {data.length === 0 && <NoData />}
+        {
+          data.length !== 0 &&
+          data.map((value, index) => {
+            return (
+              <AnnouncementCard
+                key={index}
+                title={value.title}
+                announcementList={value.announcementList}
+              />
+            );
+          })
+        }
+        {
+          data.length === 0 && <NoData />
+        }
       </Container>
     </CssBaseline>
   );

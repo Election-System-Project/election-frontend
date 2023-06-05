@@ -14,6 +14,11 @@ import Loading from "../components/Loading";
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
+
+const ApplicationPage = lazy(() =>
+  import("../pages/ApplicationPage/ApplicationPage")
+);
+const Status = lazy(() => import("../pages/StatusPage/StatusPage"));
 const AnnouncementPage = lazy(() =>
   import("../pages/AnnouncementPage/AnnouncementPage")
 );
@@ -23,8 +28,8 @@ const AnnouncementDetailsPage = lazy(() =>
 const AnnouncementCreatePage = lazy(() =>
   import("../pages/AnnouncementPage/AnnouncementCreatePage")
 );
-const ApplicationPage = lazy(() =>
-  import("../pages/ApplicationPage/ApplicationPage")
+const ResultApprovementPage = lazy(() =>
+  import("../pages/ResultApprovementPage/ResultApprovementPage")
 );
 
 const NotFound = lazy(() => import("../components/NotFound"));
@@ -43,18 +48,26 @@ const privateRoutes = [
   {
     path: "/announcements/:title/:id",
     component: AnnouncementDetailsPage,
+    exact: true,
   },
   {
     path: "/announcements/delete/:id",
     component: AnnouncementCreatePage,
+    exact: true,
   },
   {
     path: "/announcements/create",
     component: AnnouncementCreatePage,
+    exact: true,
   },
   {
     path: "/announcements",
     component: AnnouncementPage,
+    exact: true,
+  },
+  {
+    path: "/approvements/result",
+    component: ResultApprovementPage,
     exact: true,
   },
   {
@@ -70,6 +83,11 @@ const privateRoutes = [
   {
     path: "/applicationForm",
     component: ApplicationPage,
+  },
+  {
+    path: "/status",
+    component: Status,
+    exact: true,
   },
 ];
 
@@ -112,6 +130,8 @@ export default function AppRoutes() {
         },
         { label: "Announcements", Path: "/announcements" },
         { label: "Vote for Department Representatives", Path: "/vote" },
+        { label: "Result Approvement", Path: "/approvements/result" },
+        { label: "Candidate Status", Path: "/status" },
       ];
       setDrawerList(drawerList);
     }
