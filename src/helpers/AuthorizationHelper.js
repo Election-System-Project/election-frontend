@@ -3,6 +3,11 @@ import SessionHelper from "./SessionHelper";
 let authorizationLookup = {};
 const user = SessionHelper.getUser();
 
+authorizationLookup.application = {
+  "Admin": { view: true },
+  "Student": { view: true },
+};
+
 export function getLookup() {
   return authorizationLookup;
 }
