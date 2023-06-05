@@ -11,8 +11,8 @@ import PropTypes from "prop-types";
 import React from "react";
 
 function EnhancedTableToolbar(props) {
-    const { numSelected, handleApprove, handleReject } = props;
-
+    const { name, selectedList, handleApprove, handleReject } = props;
+    const numSelected = selectedList.length;
 
     return (
         <Toolbar
@@ -59,7 +59,7 @@ function EnhancedTableToolbar(props) {
                         color="success"
                         variant="contained"
                         startIcon={<TaskAltIcon />}
-                        onClick={handleApprove}
+                        onClick={() => handleApprove(name, selectedList)}
                     >
                         <Typography>Approve</Typography>
                     </Button>
@@ -71,7 +71,7 @@ function EnhancedTableToolbar(props) {
                         color="error"
                         variant="contained"
                         startIcon={<CancelIcon />}
-                        onClick={handleReject}
+                        onClick={() => handleReject(name, selectedList)}
                     >
                         Reject
                     </Button>

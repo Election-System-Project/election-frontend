@@ -5,89 +5,83 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 import resultService from "../../services/result.service";
-import Comparator from "./components/Comparator";
 import EnhancedTableHead from "./components/EnhancedTableHead";
 import EnhancedTableToolbar from "./components/EnhancedTableToolbar";
-import StableSort from "./components/StableSort";
 import { Container, CssBaseline } from "@mui/material";
+import { useLocation, useParams } from "react-router-dom"
+import { useCallback } from "react";
+import { useEffect } from "react";
+import NoData from "../../components/NoData";
 
-function createData(
-    name,
-    departmantName,
-    grade,
-    totalVote
-) {
-    return {
-        name,
-        departmantName,
-        grade,
-        totalVote
-    };
-}
+// function createData(
+//     student_id,
+//     name,
+//     departmantName,
+//     grade,
+//     totalVote
+// ) {
+//     return {
+//         student_id,
+//         name,
+//         departmantName,
+//         grade,
+//         totalVote
+//     };
+// }
 
-const rows = [
-    createData("Burak Keçeci", "Computer Engineering", 3, 196),
-    createData("Malik Hinwani", "Bomputer Enginnering", 1, 165),
-    createData("Çağın Tunç", "Domputer Enginnering", 4, 154),
-    createData("Melih Çakmak", "Xomputer Enginnering", 2, 1),
-    createData("Sude Nur Çevik", "Komputer Enginnering", 3, 173),
-    createData("Serdar Sertgöz", "Fomputer Enginnering", 4, 82)
-];
+// const rows = [
+//     createData("11111114","Burak Keçeci", "Computer Engineering", 3, 196),
+//     createData("","Malik Hinwani", "Bomputer Enginnering", 1, 165),
+//     createData("","Çağın Tunç", "Domputer Enginnering", 4, 154),
+//     createData("","Melih Çakmak", "Xomputer Enginnering", 2, 1),
+//     createData("","Sude Nur Çevik", "Komputer Enginnering", 3, 173),
+//     createData("", "Serdar Sertgöz", "Fomputer Enginnering", 4, 82)
+// ];
 
-export default function ResultApprovementPage({ name }) {
-    // const [data, setData] = React.useState({});
-    const [order, setOrder] = React.useState("asc");
-    const [orderBy, setOrderBy] = React.useState("name");
+export default function ResultApprovementDetailsPage() {
+    const [rows, setRows] = React.useState([]);
     const [selected, setSelected] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-    // const location = useLocation();
+    const location = useLocation();
+    const { name } = useParams();
 
-    // const fetchData = useCallback(async () => {
-    //     await resultService.fetchData().then((res) => {
-    //         if (!res || res.status !== 200) {
-    //             throw new Error("Failed to get announcements");
-    //         }
-    //         //setData(res.data.array);
-    //     });
-    // }, []);
+    const fetchData = useCallback(async () => {
+        await resultService.fetchData(name).then((res) => {
+            if (!res || res.status !== 200) {
+                throw new Error("Failed to get announcements");
+            }
+            setRows(res.data);
+        });
+    }, []);
 
-    // useEffect(() => {
-    //     fetchData();
-    // }, [fetchData]);
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
-    // useEffect(() => {
-    //     if (location.state && location.state.refresh) {
-    //         fetchData();
-    //     }
-    // }, [fetchData, location.state]);
-
-    const handleRequestSort = (event, property) => {
-        const isAsc = orderBy === property && order === "asc";
-        setOrder(isAsc ? "desc" : "asc");
-        setOrderBy(property);
-    };
+    useEffect(() => {
+        if (location.state && location.state.refresh) {
+            fetchData();
+        }
+    }, [fetchData, location.state]);
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelected = rows.map((n) => n.name);
+            const newSelected = rows.map((n) => n.student_id);
             setSelected(newSelected);
             return;
         }
         setSelected([]);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
+    const handleClick = (event, student_id) => {
+        const selectedIndex = selected.indexOf(student_id);
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
+            newSelected = newSelected.concat(selected, student_id);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -102,12 +96,19 @@ export default function ResultApprovementPage({ name }) {
         setSelected(newSelected);
     };
 
-    const handleApprove = async (users) => {
+    const handleApprove = async (name, users) => {
         try {
-            const res = await resultService.approveUsers(users);
+            let userList = [];
+            users.forEach(element => {
+                userList.push({
+                    student_id: element,
+                    is_approved: true
+                })
+            });
+            const res = await resultService.approveUser(name, userList);
             console.log(res);
             if (res) {
-                // Item deleted successfully
+                // Users approved successfully
                 window.location.reload();
             } else {
                 throw new Error("Failed to delete announcement!");
@@ -118,12 +119,19 @@ export default function ResultApprovementPage({ name }) {
         }
     };
 
-    const handleReject = async (users) => {
+    const handleReject = async (name, users) => {
         try {
-            const res = await resultService.rejectUsers(users);
+            let userList = [];
+            users.forEach(element => {
+                userList.push({
+                    student_id: element,
+                    is_approved: true
+                })
+            });
+            const res = await resultService.rejectUser(name, userList);
             console.log(res);
             if (res) {
-                // Item deleted successfully
+                // Users rejected successfully
                 window.location.reload();
             } else {
                 throw new Error("Failed to delete announcement!");
@@ -134,110 +142,75 @@ export default function ResultApprovementPage({ name }) {
         }
     };
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-    const isSelected = (name) => selected.indexOf(name) !== -1;
-
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
-    const visibleRows = React.useMemo(
-        () =>
-            StableSort(rows, Comparator(order, orderBy)).slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-            ),
-        [order, orderBy, page, rowsPerPage]
-    );
+    const isSelected = (student_id) => selected.indexOf(student_id) !== -1;
 
     return (
         <CssBaseline>
             <Container>
                 <Box sx={{ width: "100%" }}>
-                    <Paper sx={{ width: "100%", mb: 2 }}>
-                        <EnhancedTableToolbar
-                            numSelected={selected.length}
-                            handleApprove={handleApprove}
-                            handleReject={handleReject}
-                        />
-                        <TableContainer>
-                            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-                                <EnhancedTableHead
-                                    numSelected={selected.length}
-                                    order={order}
-                                    orderBy={orderBy}
-                                    onSelectAllClick={handleSelectAllClick}
-                                    onRequestSort={handleRequestSort}
-                                    rowCount={rows.length}
-                                />
-                                <TableBody>
-                                    {visibleRows.map((row, index) => {
-                                        const isItemSelected = isSelected(row.name);
-                                        const labelId = `enhanced-table-checkbox-${index}`;
+                    {
+                        rows.length !== 0 &&
+                        <Paper sx={{ width: "100%", mb: 2 }}>
 
-                                        return (
-                                            <TableRow
-                                                hover
-                                                tabIndex={-1}
-                                                key={row.name}
-                                                selected={isItemSelected}
-                                                sx={{ cursor: "pointer" }}
-                                            >
-                                                <TableCell padding="checkbox">
-                                                    <Checkbox
-                                                        color="primary"
-                                                        onClick={(event) => handleClick(event, row.name)}
-                                                        checked={isItemSelected}
-                                                        inputProps={{
-                                                            "aria-labelledby": labelId
-                                                        }}
-                                                    />
-                                                </TableCell>
-                                                <TableCell
-                                                    component="th"
-                                                    id={labelId}
-                                                    scope="row"
-                                                    padding="none"
+                            <EnhancedTableToolbar
+                                name={name}
+                                selectedList={selected}
+                                handleApprove={handleApprove}
+                                handleReject={handleReject}
+                            />
+                            <TableContainer>
+                                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                                    <EnhancedTableHead
+                                        numSelected={selected.length}
+                                        onSelectAllClick={handleSelectAllClick}
+                                        rowCount={rows.length}
+                                    />
+                                    <TableBody>
+                                        {rows.map((row, index) => {
+                                            const isItemSelected = isSelected(row.student_id);
+                                            const labelId = `enhanced-table-checkbox-${index}`;
+
+                                            return (
+                                                <TableRow
+                                                    hover
+                                                    tabIndex={-1}
+                                                    key={row.student_id}
+                                                    selected={isItemSelected}
+                                                    sx={{ cursor: "pointer" }}
                                                 >
-                                                    {row.name}
-                                                </TableCell>
-                                                <TableCell align="left">{row.departmantName}</TableCell>
-                                                <TableCell align="left">{row.grade}</TableCell>
-                                                <TableCell align="left">{row.totalVote}</TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                                    {emptyRows > 0 && (
-                                        <TableRow
-                                            style={{
-                                                height: 53 * emptyRows
-                                            }}
-                                        >
-                                            <TableCell colSpan={6} />
-                                        </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                        <TablePagination
-                            rowsPerPageOptions={[5, 10, 25]}
-                            component="div"
-                            count={rows.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                        />
-                    </Paper>
+                                                    <TableCell padding="checkbox">
+                                                        <Checkbox
+                                                            color="primary"
+                                                            onClick={(event) => handleClick(event, row.student_id)}
+                                                            checked={isItemSelected}
+                                                            inputProps={{
+                                                                "aria-labelledby": labelId
+                                                            }}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell
+                                                        component="th"
+                                                        id={labelId}
+                                                        scope="row"
+                                                        padding="none"
+                                                    >
+                                                        {row.student_id}
+                                                    </TableCell>
+                                                    <TableCell align="left">{row.name}</TableCell>
+                                                    <TableCell align="left">{row.department}</TableCell>
+                                                    <TableCell align="left">{row.vote_count}</TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Paper>
+                    }
                 </Box>
+                {
+                    rows.length === 0 && <NoData />
+                }
             </Container>
         </CssBaseline>
     );
