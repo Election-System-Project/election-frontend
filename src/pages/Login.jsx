@@ -63,8 +63,8 @@ export default function Login({ update, setUpdate }) {
     if (res?.status === 200) {
       let data = res?.data;
       console.log(data);
-      const res2 = await authService.synchDatabase(data);
-      console.log(res2);
+      // const res2 = await authService.synchDatabase(data);
+      // console.log(res2);
       SessionHelper.setUser(data);
       setUpdate(!update);
       history?.location?.state
