@@ -18,6 +18,7 @@ const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/Announceme
 const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
 const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
 const ResultApprovementPage = lazy(() => import("../pages/ResultApprovementPage/ResultApprovementPage"));
+const ResultApprovementDetailsPage = lazy(() => import("../pages/ResultApprovementPage/ResultApprovementDetailsPage"));
 
 const NotFound = lazy(() => import("../components/NotFound"));
 
@@ -50,6 +51,11 @@ const privateRoutes = [
   {
     path: "/announcements",
     component: AnnouncementPage,
+    exact: true
+  },
+  {
+    path: "/approvements/result/:name",
+    component: ResultApprovementDetailsPage,
     exact: true
   },
   {

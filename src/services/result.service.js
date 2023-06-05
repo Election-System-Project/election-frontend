@@ -17,16 +17,10 @@ const rejectUser = async (data) => {
     return res;
 }
 
-const getDocumentOfUser = async (data) => {
-    const res = await Request("post", API_URL + "/resultApprovements/getDocument/", data);
-    return res;
-}
-
 const resultService = {
     fetchData,
     approveUser,
     rejectUser,
-    getDocumentOfUser
 }
 
 export default resultService;
