@@ -14,14 +14,17 @@ import Loading from "../components/Loading";
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
+
 const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementPage"));
 const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
 const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
 const ResultApprovementPage = lazy(() => import("../pages/ResultApprovementPage/ResultApprovementPage"));
-const ApplicationApprovementPage = lazy(() => import("../pages/ApplicationApprovementPage/ApplicationApprovementPage"));
+
+const ResultApprovementDetailsPage = lazy(() => import("../pages/ResultApprovementPage/ResultApprovementDetailsPage"));
+const ApplicationPage = lazy(() =>  import("../pages/ApplicationPage/ApplicationPage"));
+const Status = lazy(() => import("../pages/StatusPage/StatusPage"));
 
 const NotFound = lazy(() => import("../components/NotFound"));
-
 const VotePage = lazy(() => import("../pages/VotePage/VotePage"));
 
 const auth = [
@@ -36,27 +39,32 @@ const privateRoutes = [
   {
     path: "/announcements/:title/:id",
     component: AnnouncementDetailsPage,
-    exact: true
+    exact: true,
   },
   {
     path: "/announcements/delete/:id",
     component: AnnouncementCreatePage,
-    exact: true
+    exact: true,
   },
   {
     path: "/announcements/create",
     component: AnnouncementCreatePage,
-    exact: true
+    exact: true,
   },
   {
     path: "/announcements",
     component: AnnouncementPage,
+    exact: true,
+  },
+  {
+    path: "/approvements/result/:name",
+    component: ResultApprovementDetailsPage,
     exact: true
   },
   {
     path: "/approvements/result",
     component: ResultApprovementPage,
-    exact: true
+    exact: true,
   },
   {
     path: "/approvements/application",
@@ -66,12 +74,21 @@ const privateRoutes = [
   {
     path: "/dashboard",
     component: Dashboard,
-    exact: true
+    exact: true,
   },
   {
     path: "/vote",
     component: VotePage,
-    exact: true
+    exact: true,
+  },
+  {
+    path: "/applicationForm",
+    component: ApplicationPage,
+  },
+  {
+    path: "/status",
+    component: Status,
+    exact: true,
   },
 ];
 
@@ -108,10 +125,16 @@ export default function AppRoutes() {
 
       let drawerList = [
         { label: "Dashboard", Path: "/dashboard" },
+        authorization.application && {
+          label: "Apply for Department Candidacy",
+          Path: "/applicationForm",
+        },
         { label: "Announcements", Path: "/announcements" },
         { label: "Vote for Department Representatives", Path: "/vote" },
         { label: "Result Approvement", Path: "/approvements/result" },
-        { label: "Application Approvement", Path: "/approvements/application" },
+
+        { label: "Candidate Status", Path: "/status" },
+
       ];
       setDrawerList(drawerList);
     }

@@ -50,10 +50,10 @@ function AnnouncementPage() {
   const classes = style();
 
   const [data, setData] = useState([]);
-
   const roles = SessionHelper.getUser().roles;
   const isAdmin = roles?.includes("Admin");
   const isDeansOffice = roles?.includes("DeansOffice");
+
 
   const location = useLocation();
 

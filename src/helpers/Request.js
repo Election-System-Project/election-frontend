@@ -1,8 +1,10 @@
 import axios from "axios";
 import SessionHelper from "./SessionHelper";
 
-const url = "https://0bbc-193-140-250-254.ngrok-free.app/"; // base url is not determined yet
-const loginUrl = "https://2ac45b94-be4a-4a5b-bfd9-8ee6a2e19c95.mock.pstmn.io";
+
+const url = "https://fa61-193-140-250-87.ngrok-free.app"; // base url is not determined yet
+const loginUrl = "https://2ac45b94-be4a-4a5b-bfd9-8ee6a2e19c95.mock.pstmn.io"; //mockapi
+
 
 /**
  * Manages the requests made to the REST api.
