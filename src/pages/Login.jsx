@@ -56,17 +56,15 @@ export default function Login({ update, setUpdate }) {
   const [severity, setSeverity] = React.useState("info");
   const history = useHistory();
 
-  // const regexRules =
-  //   /(?=.*[A-Z].*)(?=.*[a-z].*)(?=.*\d)(?=.*[!@#$%&*'(),\-+<=>:;?{}^._])[A-Za-z\d!@#$%&*'(),\-+<=>:;?{}^._]{8,32}$/;
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     const res = await authService.login(email, password);
-    console.log(res);
     if (res?.status === 200) {
       let data = res?.data;
       console.log(data);
+      const res2 = await authService.synchDatabase(data);
+      console.log(res2);
       SessionHelper.setUser(data);
       setUpdate(!update);
       history?.location?.state
@@ -74,7 +72,7 @@ export default function Login({ update, setUpdate }) {
         : history.push("/dashboard");
       setLoading(false);
     } else {
-      setSnackbarMessage(res?.data?.error_message);
+      setSnackbarMessage(res?.data?.error?.message);
       setSnackbar(true);
       setSeverity("error");
     }
@@ -198,7 +196,7 @@ export default function Login({ update, setUpdate }) {
                   // let re =
                   //   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                   // if (re.test(password)) {
-                    handleLogin(e);
+                  handleLogin(e);
                   // } else {
                   //   setSnackbar(true);
                   //   setSnackbarMessage("This is an invalid password");

@@ -6,7 +6,6 @@ import SessionHelper from "../../helpers/SessionHelper";
 import { useEffect, useState } from "react";
 import { Button, Paper } from "@mui/material";
 import { AddCircleOutline } from "@material-ui/icons";
-import SessionHelper from "../../helpers/SessionHelper";
 import NoData from "../../components/NoData";
 import { useLocation } from 'react-router-dom';
 

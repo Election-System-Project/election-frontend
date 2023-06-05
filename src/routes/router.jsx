@@ -14,9 +14,18 @@ import Loading from "../components/Loading";
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
-const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementPage"));
-const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
-const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
+const AnnouncementPage = lazy(() =>
+  import("../pages/AnnouncementPage/AnnouncementPage")
+);
+const AnnouncementDetailsPage = lazy(() =>
+  import("../pages/AnnouncementPage/AnnouncementDetailsPage")
+);
+const AnnouncementCreatePage = lazy(() =>
+  import("../pages/AnnouncementPage/AnnouncementCreatePage")
+);
+const ApplicationPage = lazy(() =>
+  import("../pages/ApplicationPage/ApplicationPage")
+);
 
 const NotFound = lazy(() => import("../components/NotFound"));
 
@@ -46,17 +55,21 @@ const privateRoutes = [
   {
     path: "/announcements",
     component: AnnouncementPage,
-    exact: true
+    exact: true,
   },
   {
     path: "/dashboard",
     component: Dashboard,
-    exact: true
+    exact: true,
   },
   {
     path: "/vote",
     component: VotePage,
-    exact: true
+    exact: true,
+  },
+  {
+    path: "/applicationForm",
+    component: ApplicationPage,
   },
 ];
 
@@ -93,6 +106,10 @@ export default function AppRoutes() {
 
       let drawerList = [
         { label: "Dashboard", Path: "/dashboard" },
+        authorization.application && {
+          label: "Apply for Department Candidacy",
+          Path: "/applicationForm",
+        },
         { label: "Announcements", Path: "/announcements" },
         { label: "Vote for Department Representatives", Path: "/vote" },
       ];
