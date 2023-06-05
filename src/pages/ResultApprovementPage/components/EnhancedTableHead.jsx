@@ -23,28 +23,16 @@ const headCells = [
     },
     {
         id: "grade",
-        numeric: true,
+        numeric: false,
         disablePadding: false,
         label: "Grade"
     },
     {
-        id: "document1",
+        id: "totalVote",
         numeric: false,
         disablePadding: false,
-        label: "Document 1"
+        label: "Total Vote"
     },
-    {
-        id: "document2",
-        numeric: false,
-        disablePadding: false,
-        label: "Document 2"
-    },
-    {
-        id: "document3",
-        numeric: false,
-        disablePadding: false,
-        label: "Document 3"
-    }
 ];
 
 function EnhancedTableHead(props) {

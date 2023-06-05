@@ -15,25 +15,14 @@ const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
 
-const ApplicationPage = lazy(() =>
-  import("../pages/ApplicationPage/ApplicationPage")
-);
+const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementPage"));
+const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
+const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
+const ResultApprovementPage = lazy(() => import("../pages/ResultApprovementPage/ResultApprovementPage"));
+const ResultApprovementDetailsPage = lazy(() => import("../pages/ResultApprovementPage/ResultApprovementDetailsPage"));
+const ApplicationPage = lazy(() =>  import("../pages/ApplicationPage/ApplicationPage"));
 const Status = lazy(() => import("../pages/StatusPage/StatusPage"));
-const AnnouncementPage = lazy(() =>
-  import("../pages/AnnouncementPage/AnnouncementPage")
-);
-const AnnouncementDetailsPage = lazy(() =>
-  import("../pages/AnnouncementPage/AnnouncementDetailsPage")
-);
-const AnnouncementCreatePage = lazy(() =>
-  import("../pages/AnnouncementPage/AnnouncementCreatePage")
-);
-const ResultApprovementPage = lazy(() =>
-  import("../pages/ResultApprovementPage/ResultApprovementPage")
-);
-
 const NotFound = lazy(() => import("../components/NotFound"));
-
 const VotePage = lazy(() => import("../pages/VotePage/VotePage"));
 
 const auth = [
@@ -64,6 +53,11 @@ const privateRoutes = [
     path: "/announcements",
     component: AnnouncementPage,
     exact: true,
+  },
+  {
+    path: "/approvements/result/:name",
+    component: ResultApprovementDetailsPage,
+    exact: true
   },
   {
     path: "/approvements/result",
