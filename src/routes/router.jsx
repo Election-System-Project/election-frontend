@@ -58,7 +58,7 @@ const privateRoutes = [
     exact: true,
   },
   {
-    path: "/approvements/result/:name",
+    path: "/approvements/results/:name",
     component: ResultApprovementDetailsPage,
     exact: true
   },

@@ -1,3 +1,4 @@
+import PageviewIcon from '@mui/icons-material/Pageview';
 import { Button, Container, CssBaseline, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -6,9 +7,8 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import PageviewIcon from '@mui/icons-material/Pageview';
-import { useHistory } from 'react-router-dom';
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 
 function createData(name, status) {
     return { name, status };
@@ -23,8 +23,8 @@ export default function ResultApprovementPage() {
     const history = useHistory();
 
     const handleResultDetails = (name) => {
-        const title = name.toLowerCase().replace(/\s/g, '-');
-        const path = `/approvements/result/${title}`;
+        const title = name.toLowerCase().split(" ")[0];
+        const path = `/approvements/results/${title}`;
         history.push(path);
     }
 
