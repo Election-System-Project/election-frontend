@@ -15,6 +15,8 @@ const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Login = lazy(() => import("../pages/Login"));
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
 
+const ElectionSchedulePage = lazy(() => import("../pages/ElectionSchedulePage/ElectionSchedulePage"));
+
 const AnnouncementPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementPage"));
 const AnnouncementDetailsPage = lazy(() => import("../pages/AnnouncementPage/AnnouncementDetailsPage"));
 const AnnouncementCreatePage = lazy(() => import("../pages/AnnouncementPage/AnnouncementCreatePage"));
@@ -22,7 +24,7 @@ const ResultApprovementPage = lazy(() => import("../pages/ResultApprovementPage/
 const ApplicationApprovementPage = lazy(() => import("../pages/ApplicationApprovementPage/ApplicationApprovementPage"));
 
 const ResultApprovementDetailsPage = lazy(() => import("../pages/ResultApprovementPage/ResultApprovementDetailsPage"));
-const ApplicationPage = lazy(() =>  import("../pages/ApplicationPage/ApplicationPage"));
+const ApplicationPage = lazy(() => import("../pages/ApplicationPage/ApplicationPage"));
 const Status = lazy(() => import("../pages/StatusPage/StatusPage"));
 
 const NotFound = lazy(() => import("../components/NotFound"));
@@ -71,6 +73,11 @@ const privateRoutes = [
     path: "/approvements/application",
     component: ApplicationApprovementPage,
     exact: true
+  },
+  {
+    path: "/electionSchedule",
+    component: ElectionSchedulePage,
+    exact: true,
   },
   {
     path: "/dashboard",
@@ -130,12 +137,12 @@ export default function AppRoutes() {
           label: "Apply for Department Candidacy",
           Path: "/applicationForm",
         },
+        authorization.electionSchedule && { label: "Election Schedule", Path: "/electionSchedule" },
         { label: "Announcements", Path: "/announcements" },
-        { label: "Vote for Department Representatives", Path: "/vote" },
-        { label: "Result Approvement", Path: "/approvements/result" },
-        { label: "Application Approvement", Path: "/approvements/application" },
-        { label: "Election Status", Path: "/status" },
-
+        authorization.vote && { label: "Vote for Department Representatives", Path: "/vote" },
+        authorization.resultApprovement && { label: "Result Approvement", Path: "/approvements/result" },
+        authorization.applicationApprovement && { label: "Application Approvement", Path: "/approvements/application" },
+        authorization.candidateStatus && { label: "Candidate Status", Path: "/status" },
       ];
       setDrawerList(drawerList);
     }

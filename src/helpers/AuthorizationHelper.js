@@ -9,6 +9,36 @@ authorizationLookup.application = {
   Head: { view: false },
 };
 
+authorizationLookup.vote = {
+  Admin: { view: false },
+  Student: { view: true },
+  Head: { view: false },
+};
+
+authorizationLookup.electionSchedule = {
+  Admin: { view: true },
+  Student: { view: false },
+  Head: { view: false },
+};
+
+authorizationLookup.resultApprovement = {
+  Admin: { view: true },
+  Student: { view: false },
+  Head: { view: false },
+};
+
+authorizationLookup.applicationApprovement = {
+  Admin: { view: false },
+  Student: { view: false },
+  Head: { view: true },
+};
+
+authorizationLookup.candidateStatus = {
+  Admin: { view: true },
+  Student: { view: false },
+  Head: { view: false },
+};
+
 export function getLookup() {
   return authorizationLookup;
 }
