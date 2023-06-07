@@ -134,7 +134,7 @@ export default function AppRoutes() {
         { label: "Vote for Department Representatives", Path: "/vote" },
         { label: "Result Approvement", Path: "/approvements/result" },
         { label: "Application Approvement", Path: "/approvements/application" },
-        { label: "Candidate Status", Path: "/status" },
+        { label: "Election Status", Path: "/status" },
 
       ];
       setDrawerList(drawerList);

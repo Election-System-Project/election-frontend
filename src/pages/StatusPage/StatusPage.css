@@ -1,16 +1,44 @@
 #wholePage {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color:rgb(215, 215, 215);
-    border-radius: 10px;
+    
 }
 
 #table-responsive {
     overflow: scroll;
 }
-th, thead{
-    position: sticky;
+#column1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-width: 60px;
+}
+#layer {
+    min-width: 170px;
+}
+#departmentSelect {
+    font-size: medium;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+#departmentSelect2 {
+    margin-top: 10px;
+}
+#layer {
+    border-width: 10px;
+    border-color: black;
+    background-color: rgb(244, 243, 243);
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: black;
+}
+h2 {
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+th, td, thead{
     top: 0;
     text-align: center;
+    padding: 10px 10px 10px 40px !important;
 }
 tr {
     text-align: center;
