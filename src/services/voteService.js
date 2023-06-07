@@ -8,15 +8,14 @@ const fetchUser = async () => {
   return res;
 };
 
-const vote = async (id) => {
+const vote = async (id, userId) => {
   const res = await Request("post", "/voteController/addvote/", {
     student_id: id,
+    user_id: userId,
   });
   return res;
 };
 
 const voteService = { fetchUser, vote };
 
-
 export default voteService;
-

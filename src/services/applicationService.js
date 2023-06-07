@@ -3,7 +3,7 @@ import Request from "../helpers/Request";
 const API_URL = "/applicationController";
 
 const getApplicationById = async (studentid) => {
-  const res = await Request("get", API_URL + "/applications/" + studentid, {
+  const res = await Request("post", API_URL + "/applications/" + studentid, {
     studentid: studentid,
   });
   return res;

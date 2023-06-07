@@ -63,8 +63,10 @@ export default function Login({ update, setUpdate }) {
     if (res?.status === 200) {
       let data = res?.data;
       console.log(data);
-      // const res2 = await authService.synchDatabase(data);
-      // console.log(res2);
+      const res2 = await authService.synchDatabase(data);
+      const data2 = res2.data;
+      const user = { ...data2.userData, roles: data2.roles };
+      console.log(user);
       SessionHelper.setUser(data);
       setUpdate(!update);
       history?.location?.state
@@ -152,7 +154,7 @@ export default function Login({ update, setUpdate }) {
             onChange={(password) => setPassword(password.target.value)}
           />
         </Grid>
-        <FormControlLabel
+        {/* <FormControlLabel
           control={
             <Checkbox
               name="checkedB"
@@ -166,7 +168,7 @@ export default function Login({ update, setUpdate }) {
           }
           style={{ marginTop: 20 }}
           label="Remember me"
-        />
+        /> */}
         <div className={classes.buttonContainer}>
           {loading ? (
             <CircularProgress style={{ color: "#999" }} />
@@ -183,6 +185,7 @@ export default function Login({ update, setUpdate }) {
                   backgroundColor: "green",
                 },
                 fontSize: "15px",
+                marginTop: 5,
               }}
               fullWidth
               onClick={(e) => {
