@@ -4,8 +4,9 @@ let authorizationLookup = {};
 const user = SessionHelper.getUser();
 
 authorizationLookup.application = {
-  "Admin": { view: true },
-  "Student": { view: true },
+  Admin: { view: true },
+  Student: { view: true },
+  Head: { view: false },
 };
 
 export function getLookup() {
@@ -26,14 +27,14 @@ export function getViewAuthorizationForAll(roles) {
   return authorization;
 }
 
-export function getAuthorizationForPage(roles, page) {
-  let authorization = {};
-  for (let i = 0; i < roles?.length; i++) {
-    for (let prop in authorizationLookup[page][roles[i]]) {
-      authorization[prop] = authorization[prop]
-        ? true
-        : authorizationLookup[page][roles[i]][prop];
-    }
-  }
-  return authorization;
-}
+// export function getAuthorizationForPage(roles, page) {
+//   let authorization = {};
+//   for (let i = 0; i < roles?.length; i++) {
+//     for (let prop in authorizationLookup[page][roles[i]]) {
+//       authorization[prop] = authorization[prop]
+//         ? true
+//         : authorizationLookup[page][roles[i]][prop];
+//     }
+//   }
+//   return authorization;
+// }

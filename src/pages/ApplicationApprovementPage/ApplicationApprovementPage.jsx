@@ -16,8 +16,9 @@ import EnhancedTableToolbar from "./components/EnhancedTableToolbar";
 import StableSort from "./components/StableSort";
 
 function createData(
+    student_id,
     name,
-    departmantName,
+    department,
     grade,
     gpa,
     document1,
@@ -25,8 +26,9 @@ function createData(
     document3
 ) {
     return {
+        student_id,
         name,
-        departmantName,
+        department,
         grade,
         gpa,
         document1,
@@ -35,17 +37,13 @@ function createData(
     };
 }
 
-const rows = [
-    createData("Burak Keçeci", "Computer Engineering", 3, 3.15),
-    createData("Malik Hinwani", "Bomputer Enginnering", 1, 2.6),
-    createData("Çağın Tunç", "Domputer Enginnering", 4, 2.3),
-    createData("Melih Çakmak", "Xomputer Enginnering", 2, 2.4),
-    createData("Sude Nur Çevik", "Komputer Enginnering", 3, 2.8),
-    createData("Serdar Sertgöz", "Fomputer Enginnering", 4, 2.3)
-];
+
+ 
+
+
 
 export default function ApplicationApprovementPage() {
-    // const [data, setData] = React.useState({});
+    const [rows, setRows] = React.useState([]);
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("name");
     const [selected, setSelected] = React.useState([]);
@@ -73,6 +71,38 @@ export default function ApplicationApprovementPage() {
     //     }
     // }, [fetchData, location.state]);
 
+
+
+    const fetchData = React.useCallback(async () => {
+        try {
+          const res = await approvementService.fetchData();
+          if (res && res.status === 200) {
+            console.log(res.data);
+            const newRows = res.data.map((element) =>
+            createData(
+              element.student_id,
+              element.name,
+              element.department,
+              element.grade,
+              element.gpa
+            )
+          );
+          setRows(newRows);
+            
+          
+          } else {
+            throw new Error("Failed to get data");
+          }
+        } catch (error) {
+          console.error(error);
+          // Handle error
+        }
+      }, []);
+    
+      React.useEffect(() => {
+        fetchData();
+      }, [fetchData]);
+
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
@@ -88,57 +118,47 @@ export default function ApplicationApprovementPage() {
         setSelected([]);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
+    const handleClick = (event, student_id) => {
+        const selectedIndex = selected.indexOf(student_id);
         let newSelected = [];
-
+      
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1)
-            );
+          newSelected = [...selected, student_id];
+        } else {
+          newSelected = selected.filter((selectedId) => selectedId !== student_id);
         }
-
+      
         setSelected(newSelected);
-    };
+      };
+      
 
-    const handleApprove = async (users) => {
+    const handleApprove = async () => {
         try {
-            const res = await approvementService.approveUsers(users);
-            console.log(res);
-            if (res) {
-                // Item deleted successfully
-                window.location.reload();
-            } else {
-                throw new Error("Failed to delete announcement!");
-            }
+          const selectedUsers = rows.filter((row) => selected.includes(row.student_id));
+          console.log(selectedUsers); // Selected users are logged to the console
+          approvementService.approveUser(selectedUsers);
+          window.location.reload();
         } catch (error) {
-            console.error(error);
-            // Handle error
+          console.error(error);
+          // Error handling
         }
-    };
+      };
+      
+    
+      
 
-    const handleReject = async (users) => {
+      const handleReject = async () => {
         try {
-            const res = await approvementService.rejectUsers(users);
-            console.log(res);
-            if (res) {
-                // Item deleted successfully
-                window.location.reload();
-            } else {
-                throw new Error("Failed to delete announcement!");
-            }
+          const selectedUsers = rows.filter((row) => selected.includes(row.student_id));
+          console.log(selectedUsers); // Selected users are logged to the console
+          approvementService.rejectUser(selectedUsers);
+          window.location.reload();
         } catch (error) {
-            console.error(error);
-            // Handle error
+          console.error(error);
+          // Error handling
         }
-    };
+      };
+      
 
     const handleDocumentClick = async (event, name, docId) => {
         try {
@@ -165,7 +185,7 @@ export default function ApplicationApprovementPage() {
         setPage(0);
     };
 
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (student_id) => selected.indexOf(student_id) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -177,7 +197,7 @@ export default function ApplicationApprovementPage() {
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage
             ),
-        [order, orderBy, page, rowsPerPage]
+        [order, orderBy, page, rowsPerPage,rows]
     );
 
     return (
@@ -200,21 +220,21 @@ export default function ApplicationApprovementPage() {
                         />
                         <TableBody>
                             {visibleRows.map((row, index) => {
-                                const isItemSelected = isSelected(row.name);
+                                const isItemSelected = isSelected(row.student_id);
                                 const labelId = `enhanced-table-checkbox-${index}`;
 
                                 return (
                                     <TableRow
                                         hover
                                         tabIndex={-1}
-                                        key={row.name}
+                                        key={row.student_id}
                                         selected={isItemSelected}
                                         sx={{ cursor: "pointer" }}
                                     >
                                         <TableCell padding="checkbox">
                                             <Checkbox
                                                 color="primary"
-                                                onClick={(event) => handleClick(event, row.name)}
+                                                onClick={(event) => handleClick(event, row.student_id)}
                                                 checked={isItemSelected}
                                                 inputProps={{
                                                     "aria-labelledby": labelId
@@ -229,7 +249,7 @@ export default function ApplicationApprovementPage() {
                                         >
                                             {row.name}
                                         </TableCell>
-                                        <TableCell align="left">{row.departmantName}</TableCell>
+                                        <TableCell align="left">{row.department}</TableCell>
                                         <TableCell align="right">{row.grade}</TableCell>
                                         <TableCell align="right">{row.gpa}</TableCell>
                                         <TableCell align="left">

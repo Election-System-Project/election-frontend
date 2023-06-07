@@ -22,6 +22,7 @@ const synchDatabase = async (userData) => {
   const res = await Request("post", "/userController/save/", {
     user: userData,
   });
+  return res;
 };
 
 const authService = {

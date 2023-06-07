@@ -9,11 +9,13 @@ import {
 import "./votePage.css";
 import voteService from "../../services/voteService";
 import NoData from "../../components/NoData";
+import SessionHelper from "../../helpers/SessionHelper";
 
 const VotePage = () => {
   const [radioSelection, setRadioSelection] = useState(null);
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(true); // New loading state
+  const user = SessionHelper.getUser();
 
   const init = React.useCallback(async () => {
     try {
@@ -45,8 +47,12 @@ const VotePage = () => {
     e.preventDefault();
     console.log(radioSelection);
 
-    const res = await voteService.vote(radioSelection);
+    const res = await voteService.vote(radioSelection, user.studentNumber);
     if (res.status === 200) {
+      user.hasVoted = 1;
+      console.log(user);
+      const updatedData = JSON.stringify(user);
+      localStorage.setItem("user", updatedData);
       window.location = "/dashboard";
     }
     console.log(res);
@@ -54,9 +60,7 @@ const VotePage = () => {
 
   return (
     <div className="main">
-      {loading ? (
-        null // Render nothing while loading is true
-      ) : candidates.length === 0 ? (
+      {loading ? null : candidates.length === 0 ? ( // Render nothing while loading is true
         <NoData /> // Render NoData component when candidates array is empty
       ) : (
         <>
@@ -94,6 +98,7 @@ const VotePage = () => {
                   value="-1"
                   name="content"
                   className="secondRadio"
+                  disabled={user.hasVoted}
                   checked={radioSelection === "-1"}
                   onChange={handleRadioChange}
                   color="success"
@@ -108,6 +113,7 @@ const VotePage = () => {
                 component="a"
                 href="/"
                 onClick={handleButtonClick}
+                disabled={user.hasVoted}
               >
                 Submit
               </Button>
