@@ -7,6 +7,11 @@ const setElectionDates = async (data) => {
     return res;
 }
 
+const getElectionDates = async() => {
+    const res = await Request("post", API_URL + "/dates/");
+    return res;
+}
+
 const electionScheduleService = {
     setElectionDates,
 }

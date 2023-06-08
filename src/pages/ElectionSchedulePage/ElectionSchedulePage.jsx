@@ -28,10 +28,11 @@ function ElectionSchedulePage() {
     const [endDate, setEndDate] = React.useState(dayjs('2022-04-17'));
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
         const res = await electionScheduleService.setElectionDates({
-            electionType: electionType,
-            startDate: startDate.toDate().toISOString(),
-            endDate: endDate.toDate().toISOString(),
+            election_type: electionType,
+            start_date: startDate.toDate().toISOString(),
+            end_date: endDate.toDate().toISOString(),
         });
         if (res.status === 200) {
             console.log("Election dates are set.");
