@@ -5,6 +5,12 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import MailIcon from '@mui/icons-material/Mail';
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import { useCallback } from 'react';
+import electionScheduleService from '../../services/electionSchedule.service';
+import userService from '../../services/user.service';
 
 const styles = makeStyles(() => ({
   gradient: {
@@ -25,6 +31,10 @@ const steps = [
 export default function Dashboard() {
   const classes = styles();
 
+  const [startDate, setStartDate] = React.useState("");
+  const [endDate, setEndDate] = React.useState("");
+  const [messages, setMessages] = React.useState([]);
+
   const LocalStorage = JSON.parse(localStorage.getItem('user'));
   const name = LocalStorage.name;
   const surname = LocalStorage.surname;
@@ -32,11 +42,45 @@ export default function Dashboard() {
   const grade = LocalStorage.grade;
   let image;
 
-  if(name === "Cenk") {
+  if (name === "Cenk") {
     image = require("../../assets/images/user2.jpeg");
   } else {
     image = require("../../assets/images/user.png");
   }
+
+  const electionDateTime = useCallback(async () => {
+    await electionScheduleService.getElectionDates().then((res) => {
+      if (!res || res.status !== 200) {
+        throw new Error("Failed to get election dates");
+      }
+
+      const electionDates = res.data.dates[0];
+      console.log(electionDates)
+      if (electionDates) {
+        setStartDate(new Date(electionDates.startDate).getDate() + "/" + (new Date(electionDates.startDate).getMonth() + 1) + "/" + new Date(electionDates.startDate).getFullYear() + " " + new Date(electionDates.startDate).getHours() + ":" + new Date(electionDates.startDate).getMinutes());
+        setEndDate(new Date(electionDates.endDate).getDate() + "/" + (new Date(electionDates.endDate).getMonth() + 1) + "/" + new Date(electionDates.endDate).getFullYear() + " " + new Date(electionDates.endDate).getHours() + ":" + new Date(electionDates.endDate).getMinutes());
+      }
+    });
+  }, [])
+
+  React.useEffect(() => {
+    electionDateTime();
+  }, [])
+
+  const messagesService = async () => {
+    await userService.getMessages({ studentid: sId }).then((res) => {
+      if (!res || res.status !== 200) {
+        throw new Error("Failed to get messages");
+      }
+      setMessages(res.data);
+
+    })
+  };
+
+  React.useEffect(() => {
+    messagesService();
+  }, [])
+
   return (
     <CssBaseline>
       <div className={classes.gradient}>
@@ -57,7 +101,55 @@ export default function Dashboard() {
         </Box>
         <Paper elevation={3} style={{ marginTop: '100px' }}>
           <Typography variant="h5" align="left" style={{ color: 'black', paddingTop: '50px', paddingLeft: '50px' }}>
-            Your Profile
+            <CalendarMonthIcon style={{ fontSize: '3.5rem', marginBottom: '0.5rem', color: 'rgb(173, 53, 53)' }} /> Election Schedule
+          </Typography>
+          <Divider style={{ margin: '10px 50px' }} />
+          <Grid container spacing={2} style={{ padding: '50px' }}>
+            <Grid item xs={6}>
+              <Typography variant="subtitle1">Election Start Date</Typography>
+              <InputBase
+                value={startDate}
+                fullWidth
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="subtitle1">Election End Date</Typography>
+              <InputBase
+                value={endDate}
+                fullWidth
+                disabled
+              />
+            </Grid>
+          </Grid>
+        </Paper>
+
+        <Paper elevation={3} style={{ marginTop: '100px' }}>
+          <Typography variant="h5" align="left" style={{ color: 'black', paddingTop: '50px', paddingLeft: '50px' }}>
+            <MailIcon style={{ fontSize: '3.5rem', marginBottom: '0.5rem', color: 'rgb(173, 53, 53)' }} /> Messages
+          </Typography>
+          <Divider style={{ margin: '10px 50px' }} />
+          <Grid container spacing={2} style={{ padding: '50px' }}>
+            {
+              messages.map((message) => {
+                return (
+                  <>
+                    <Grid item xs={2}>
+                      <Typography variant="subtitle1" style={{background:'rgb(173, 53, 53)', color:'#fff', textAlign:'center'}}>System</Typography>
+                    </Grid>
+                    <Grid item xs={10}>
+                      <Typography variant="subtitle1">{message.content}</Typography>
+                    </Grid>
+                  </>
+                )
+              }
+              )}
+          </Grid>
+        </Paper>
+
+        <Paper elevation={3} style={{ marginTop: '100px' }}>
+          <Typography variant="h5" align="left" style={{ color: 'black', paddingTop: '50px', paddingLeft: '50px' }}>
+            <InsertEmoticonIcon style={{ fontSize: '3.5rem', marginBottom: '0.5rem', color: 'rgb(173, 53, 53)' }} /> Your Profile
           </Typography>
           <Divider style={{ margin: '10px 50px' }} />
           <Grid container spacing={2} style={{ padding: '50px' }}>

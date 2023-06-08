@@ -24,8 +24,8 @@ const electionTypes = [
 function ElectionSchedulePage() {
     const classes = useStyles();
     const [electionType, setElectionType] = React.useState("Department");
-    const [startDate, setStartDate] = React.useState(dayjs('2022-04-17'));
-    const [endDate, setEndDate] = React.useState(dayjs('2022-04-17'));
+    const [startDate, setStartDate] = React.useState(dayjs('2023-04-17'));
+    const [endDate, setEndDate] = React.useState(dayjs('2023-04-17'));
 
     const handleSubmit = async (e) => {
         e.preventDefault();
