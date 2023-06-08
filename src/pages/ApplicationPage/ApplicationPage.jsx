@@ -30,9 +30,9 @@ function ApplicationPage() {
         setSnackbar(true);
         setSeverity("error");
       } else {
-        const data = resp.data;
+        const data = resp?.data;
         const regex = /'([^']+)'/g;
-        const filePaths = data.match(regex);
+        const filePaths = data?.match(regex);
 
         for (let index = 0; index < filePaths.length; index++) {
           const filePath = filePaths[index].replace(/'/g, "");
@@ -117,6 +117,15 @@ function ApplicationPage() {
         setSnackbarMessage("Your application has been successfully sent!");
         setSnackbar(true);
         setSeverity("success");
+        const userObject = user;
+
+        // Modify the hasApplied field of the object
+        userObject.hasApplied = true;
+
+        // Convert the modified object back to a string
+        const updatedUserObjectString = JSON.stringify(userObject);
+        SessionHelper.setUser(updatedUserObjectString);
+        console.log(SessionHelper.getUser());
       } else {
         setSnackbarMessage(res?.data?.error?.message);
         setSnackbar(true);
