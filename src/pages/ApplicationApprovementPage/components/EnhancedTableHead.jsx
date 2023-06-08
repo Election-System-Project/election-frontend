@@ -21,12 +21,7 @@ const headCells = [
         disablePadding: false,
         label: "Department Name"
     },
-    {
-        id: "grade",
-        numeric: true,
-        disablePadding: false,
-        label: "Grade"
-    },
+
     {
         id: "gpa",
         numeric: true,

@@ -19,7 +19,6 @@ function createData(
     student_id,
     name,
     department,
-    grade,
     gpa,
     document1,
     document2,
@@ -29,7 +28,6 @@ function createData(
         student_id,
         name,
         department,
-        grade,
         gpa,
         document1,
         document2,
@@ -84,7 +82,6 @@ export default function ApplicationApprovementPage() {
               element.name,
               element.department,
               element.grade,
-              element.gpa
             )
           );
           setRows(newRows);
@@ -250,7 +247,6 @@ export default function ApplicationApprovementPage() {
                                             {row.name}
                                         </TableCell>
                                         <TableCell align="left">{row.department}</TableCell>
-                                        <TableCell align="right">{row.grade}</TableCell>
                                         <TableCell align="right">{row.gpa}</TableCell>
                                         <TableCell align="left">
                                             <Button onClick={(event) => handleDocumentClick(event, row.name, 1)}>View</Button>
