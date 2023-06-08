@@ -19,7 +19,9 @@ export default function AnnouncementList({ title, announcementList }) {
             <Divider />
             <List>
                 {
-                    Object.keys(announcementList).length !== 0 && announcementList.map((value) =>
+                    Object.keys(announcementList).length === 0 ?
+                        <Typography variant="h6" component="h2" gutterBottom style={{textAlign:'center', color:'grey'}}> No Data </Typography> :
+                        announcementList.map((value) =>
                             <AnnouncementItem type={title.toLowerCase()} value={value} key={value.id} id={value.id} />
                         )
                 }
