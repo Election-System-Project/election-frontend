@@ -69,7 +69,15 @@ function ApplicationPage() {
       setSeverity("error");
     } else {
       setLoading(true);
-      const res = await applicationService.apply(files, text);
+      const formData = new FormData();
+
+      formData.append("files1", files[0]);
+      formData.append("files2", files[1]);
+      formData.append("files3", files[2]);
+
+      formData.append("studentid", user?.studentNumber);
+      formData.append("notes", text);
+      const res = await applicationService.apply(formData);
       if (res?.status === 200) {
         setSnackbarMessage("Your application has been successfully sent!");
         setSnackbar(true);
@@ -79,6 +87,8 @@ function ApplicationPage() {
         setSnackbar(true);
         setSeverity("error");
       }
+      setLoading(false);
+      // window.location.reload();
     }
   };
 

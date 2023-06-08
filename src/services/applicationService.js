@@ -1,6 +1,6 @@
 import Request from "../helpers/Request";
 
-const API_URL = "/applicationController";
+const API_URL = "/candidateController";
 
 const getApplicationById = async (studentid) => {
   const res = await Request("post", API_URL + "/applications/" + studentid, {
@@ -9,11 +9,8 @@ const getApplicationById = async (studentid) => {
   return res;
 };
 
-const apply = async (files, notes) => {
-  const res = await Request("post", API_URL + "/application/", {
-    files: files,
-    notes: notes,
-  });
+const apply = async (form_) => {
+  const res = await Request("put", API_URL + "/candidates/create/", form_);
   return res;
 };
 
