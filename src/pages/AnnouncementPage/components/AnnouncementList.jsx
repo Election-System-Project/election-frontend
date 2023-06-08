@@ -1,9 +1,13 @@
 import { List, Typography, Box, Divider } from '@material-ui/core'
 import AnnouncementItem from './AnnouncementItem'
+import NoData from '../../../components/NoData'
 import React from 'react'
 import { Campaign } from '@mui/icons-material'
 
 export default function AnnouncementList({ title, announcementList }) {
+
+    
+
     return (
         <Box>
             <Box display={'flex'} alignItems={'center'}>
@@ -15,9 +19,9 @@ export default function AnnouncementList({ title, announcementList }) {
             <Divider />
             <List>
                 {
-                    announcementList.map((value) =>
-                        <AnnouncementItem type={title.toLowerCase()} value={value} key={value.id} id={value.id} />
-                    )
+                    Object.keys(announcementList).length !== 0 && announcementList.map((value) =>
+                            <AnnouncementItem type={title.toLowerCase()} value={value} key={value.id} id={value.id} />
+                        )
                 }
             </List>
         </Box>
