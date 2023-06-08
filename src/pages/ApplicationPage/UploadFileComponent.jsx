@@ -47,7 +47,7 @@ function UploadFileComponent({
           Choose a File
         </Button>
       </label>
-      {files?.length !== 0 && (
+      {files && (
         <Typography
           variant="body1"
           className={classes.fileName}
