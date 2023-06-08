@@ -67,7 +67,7 @@ export default function Login({ update, setUpdate }) {
       const data2 = res2.data;
       const user = { ...data2.userData, roles: data2.roles };
       console.log(user);
-      SessionHelper.setUser(data);
+      SessionHelper.setUser(user);
       setUpdate(!update);
       history?.location?.state
         ? history.push(history?.location?.state?.from?.pathname)

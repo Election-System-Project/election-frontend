@@ -12,7 +12,7 @@ function UploadFileComponent({
   disabled,
 }) {
   const classes = useStyles();
-
+  console.log(files);
   return (
     <div className={classes.applicationCard}>
       <div className={classes.text}>

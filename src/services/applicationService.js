@@ -3,7 +3,7 @@ import Request from "../helpers/Request";
 const API_URL = "/candidateController";
 
 const getApplicationById = async (studentid) => {
-  const res = await Request("post", API_URL + "/applications/" + studentid, {
+  const res = await Request("post", API_URL + "/candidates/getDocument/", {
     studentid: studentid,
   });
   return res;

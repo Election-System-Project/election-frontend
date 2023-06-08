@@ -8,7 +8,7 @@ import SessionHelper from "../../helpers/SessionHelper";
 
 function ApplicationPage() {
   const classes = useStyles();
-  const [files, setFiles] = React.useState([[], [], []]);
+  const [files, setFiles] = React.useState([]);
   const [text, setText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [snackbar, setSnackbar] = React.useState(false);
@@ -18,35 +18,70 @@ function ApplicationPage() {
   const hasApplied = user?.hasApplied;
 
   const init = React.useCallback(async () => {
-    let temp = [[], [], []];
-    const resp = await applicationService.getApplicationById(
-      user?.studentNumber
-    );
-    if (resp.status !== 200) {
-      setSnackbarMessage(resp?.data?.error?.message);
-      setSnackbar(true);
-      setSeverity("error");
-    } else {
-      const filesArray = resp.data.content;
-      for (let index = 0; index < filesArray.length; index++) {
-        const element = filesArray[index];
-        temp[index].push(element?.file);
+    let temp = [];
+    try {
+      const resp = await applicationService.getApplicationById(
+        user?.studentNumber
+      );
+      console.log(resp);
+
+      if (resp.status !== 200) {
+        setSnackbarMessage(resp?.data?.error?.message);
+        setSnackbar(true);
+        setSeverity("error");
+      } else {
+        const data = resp.data;
+        const regex = /'([^']+)'/g;
+        const filePaths = data.match(regex);
+
+        for (let index = 0; index < filePaths.length; index++) {
+          const filePath = filePaths[index].replace(/'/g, "");
+          const fileName = filePath.split("pdfs/")[1];
+          console.log(fileName);
+
+          const convertedFile = {
+            name: fileName,
+            dataURL: filePath,
+          };
+          console.log(convertedFile);
+          temp[index] = convertedFile;
+        }
+
+        setFiles(temp);
       }
-      setFiles(temp);
+    } catch (error) {
+      console.error(error);
     }
-  }, []);
+  }, [
+    applicationService,
+    setSnackbar,
+    setSnackbarMessage,
+    setSeverity,
+    setFiles,
+    user,
+  ]);
 
   React.useEffect(() => {
     init();
   }, [init, hasApplied]);
 
+  React.useEffect(() => {
+    console.log(files);
+  }, [files]);
+
   const handleFileUpload = (e, index) => {
     console.log(e.target.files);
-    setFiles((prevFiles) => {
-      const updatedFiles = [...prevFiles];
-      updatedFiles[index] = e.target.files[0];
-      return updatedFiles;
-    });
+    if (e.target.files[0].type !== "application/pdf") {
+      setSnackbarMessage("Please upload only pdf files!");
+      setSnackbar(true);
+      setSeverity("error");
+    } else {
+      setFiles((prevFiles) => {
+        const updatedFiles = [...prevFiles];
+        updatedFiles[index] = e.target.files[0];
+        return updatedFiles;
+      });
+    }
   };
 
   const handleDeleteFile = (index) => {
@@ -88,7 +123,7 @@ function ApplicationPage() {
         setSeverity("error");
       }
       setLoading(false);
-      // window.location.reload();
+      window.location.reload();
     }
   };
 
