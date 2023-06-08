@@ -177,10 +177,6 @@ export default function AppRoutes() {
     }
   }, [user, update, active]);
 
-  React.useEffect(() => {
-    console.log(active)
-  }, [active])
-
   const init = useCallback(() => {
     console.log(active)
     electionDateTime();
