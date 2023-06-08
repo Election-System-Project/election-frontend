@@ -9,6 +9,8 @@ import { getViewAuthorizationForAll } from "../helpers/AuthorizationHelper";
 import SessionHelper from "../helpers/SessionHelper";
 import Navbar from "../components/Navbar/navbar";
 import Loading from "../components/Loading";
+import electionScheduleService from "../services/electionSchedule.service";
+import { useEffect } from "react";
 
 // lazy loading components for better performance
 const LandingPage = lazy(() => import("../pages/LandingPage"));
@@ -125,6 +127,33 @@ export default function AppRoutes() {
   const user = SessionHelper.getUser();
   const [drawerList, setDrawerList] = React.useState([]);
   const [update, setUpdate] = React.useState(false);
+  const [active, setActive] = React.useState(false);
+
+  const electionDateTime = useCallback(async () => {
+    await electionScheduleService.getElectionDates().then((res) => {
+      if (!res || res.status !== 200) {
+        throw new Error("Failed to get election dates");
+      }
+      const currentDateTime = Date.now();
+      const electionDates = res.data.dates[0];
+      console.log(electionDates)
+      if (electionDates) {
+        const electionStart = new Date(electionDates.startDate).getTime();
+        const electionEnd = new Date(electionDates.endDate).getTime();
+
+        console.log(currentDateTime, electionStart, electionEnd)
+
+        if (currentDateTime < electionStart) {
+          setActive(false);
+        } else if (currentDateTime > electionStart && currentDateTime < electionEnd) {
+          console.log("entered")
+          setActive(true);
+        } else {
+          setActive(false);
+        }
+      }
+    });
+  }, [])
 
   const populateDrawerList = useCallback(() => {
     if (user) {
@@ -133,28 +162,34 @@ export default function AppRoutes() {
 
       let drawerList = [
         { label: "Dashboard", Path: "/dashboard" },
-        authorization.application && {
+        active && authorization.application && {
           label: "Apply for Department Candidacy",
           Path: "/applicationForm",
         },
         authorization.electionSchedule && { label: "Election Schedule", Path: "/electionSchedule" },
         { label: "Announcements", Path: "/announcements" },
-        authorization.vote && { label: "Vote for Department Representatives", Path: "/vote" },
-        authorization.resultApprovement && { label: "Result Approvement", Path: "/approvements/result" },
-        authorization.applicationApprovement && { label: "Application Approvement", Path: "/approvements/application" },
-        authorization.candidateStatus && { label: "Candidate Status", Path: "/status" },
+        active && authorization.vote && { label: "Vote for Department Representatives", Path: "/vote" },
+        active && authorization.resultApprovement && { label: "Result Approvement", Path: "/approvements/result" },
+        active && authorization.applicationApprovement && { label: "Application Approvement", Path: "/approvements/application" },
+        active && authorization.candidateStatus && { label: "Candidate Status", Path: "/status" },
       ];
       setDrawerList(drawerList);
     }
-  }, [user, update]);
+  }, [user, update, active]);
+
+  React.useEffect(() => {
+    console.log(active)
+  }, [active])
 
   const init = useCallback(() => {
+    console.log(active)
+    electionDateTime();
     populateDrawerList();
-  }, [populateDrawerList, update]);
+  }, [populateDrawerList, update, electionDateTime, active ]);
 
   React.useEffect(() => {
     init();
-  }, [init, user]);
+  }, [init, user,electionDateTime, active]);
 
   const ProtectedRoutes = () => (
     <Switch>

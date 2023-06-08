@@ -14,6 +14,7 @@ const getElectionDates = async() => {
 
 const electionScheduleService = {
     setElectionDates,
+    getElectionDates
 }
 
 export default electionScheduleService;

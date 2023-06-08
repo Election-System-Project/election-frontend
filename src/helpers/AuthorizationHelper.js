@@ -10,7 +10,7 @@ authorizationLookup.application = {
 };
 
 authorizationLookup.vote = {
-  Admin: { view: false },
+  Admin: { view: true },
   Student: { view: true },
   Head: { view: false },
 };
@@ -28,7 +28,7 @@ authorizationLookup.resultApprovement = {
 };
 
 authorizationLookup.applicationApprovement = {
-  Admin: { view: false },
+  Admin: { view: true },
   Student: { view: false },
   Head: { view: true },
 };

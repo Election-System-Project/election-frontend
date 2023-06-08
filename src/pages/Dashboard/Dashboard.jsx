@@ -30,14 +30,20 @@ export default function Dashboard() {
   const surname = LocalStorage.surname;
   const sId = LocalStorage.studentNumber;
   const grade = LocalStorage.grade;
+  let image;
 
+  if(name === "Cenk") {
+    image = require("../../assets/images/user2.jpeg");
+  } else {
+    image = require("../../assets/images/user.png");
+  }
   return (
     <CssBaseline>
       <div className={classes.gradient}>
         <Typography variant="h3" align="left" style={{ color: 'white', paddingTop: '150px', paddingLeft: '50px' }}>
           Hello {name}!
         </Typography>
-        <img src={require("../../assets/images/user.png")} alt='profile' align='right' style={{ width: '160px', height: '150px', marginRight: '50px' }} />
+        <img src={image} alt='profile' align='right' style={{ width: '160px', height: '150px', marginRight: '50px' }} />
       </div>
       <Container>
         <Box sx={{ width: '100%', margin: '100px 0' }}>
