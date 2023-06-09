@@ -69,25 +69,25 @@ export default function Dashboard() {
       if (electionDates) {
         setStartDate(
           new Date(electionDates.startDate).getDate() +
-            "/" +
-            (new Date(electionDates.startDate).getMonth() + 1) +
-            "/" +
-            new Date(electionDates.startDate).getFullYear() +
-            " " +
-            new Date(electionDates.startDate).getHours() +
-            ":" +
-            new Date(electionDates.startDate).getMinutes()
+          "/" +
+          (new Date(electionDates.startDate).getMonth() + 1) +
+          "/" +
+          new Date(electionDates.startDate).getFullYear() +
+          " " +
+          new Date(electionDates.startDate).getHours() +
+          ":" +
+          new Date(electionDates.startDate).getMinutes()
         );
         setEndDate(
           new Date(electionDates.endDate).getDate() +
-            "/" +
-            (new Date(electionDates.endDate).getMonth() + 1) +
-            "/" +
-            new Date(electionDates.endDate).getFullYear() +
-            " " +
-            new Date(electionDates.endDate).getHours() +
-            ":" +
-            new Date(electionDates.endDate).getMinutes()
+          "/" +
+          (new Date(electionDates.endDate).getMonth() + 1) +
+          "/" +
+          new Date(electionDates.endDate).getFullYear() +
+          " " +
+          new Date(electionDates.endDate).getHours() +
+          ":" +
+          new Date(electionDates.endDate).getMinutes()
         );
       }
     });
@@ -102,8 +102,7 @@ export default function Dashboard() {
       if (!res || res.status !== 200) {
         throw new Error("Failed to get messages");
       }
-      console.log(res);
-      setMessages(res?.data);
+      setMessages(res.data);
     });
   };
 
@@ -183,30 +182,29 @@ export default function Dashboard() {
           </Typography>
           <Divider style={{ margin: "10px 50px" }} />
           <Grid container spacing={2} style={{ padding: "50px" }}>
-            {messages &&
-              messages?.map((message) => {
-                return (
-                  <>
-                    <Grid item xs={2}>
-                      <Typography
-                        variant="subtitle1"
-                        style={{
-                          background: "rgb(173, 53, 53)",
-                          color: "#fff",
-                          textAlign: "center",
-                        }}
-                      >
-                        System
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={10}>
-                      <Typography variant="subtitle1">
-                        {message.content}
-                      </Typography>
-                    </Grid>
-                  </>
-                );
-              })}
+            {(messages.length === 0 || messages === undefined) ? <Grid item xs={12}> <Typography variant="h6" component="h2" gutterBottom style={{ textAlign: 'center', color: 'grey' }}> No Data </Typography> </Grid> : messages.map((message) => {
+              return (
+                <>
+                  <Grid item xs={2}>
+                    <Typography
+                      variant="subtitle1"
+                      style={{
+                        background: "rgb(173, 53, 53)",
+                        color: "#fff",
+                        textAlign: "center",
+                      }}
+                    >
+                      System
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={10}>
+                    <Typography variant="subtitle1">
+                      {message.content}
+                    </Typography>
+                  </Grid>
+                </>
+              );
+            })}
           </Grid>
         </Paper>
 
