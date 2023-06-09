@@ -11,6 +11,7 @@ function ApplicationPage() {
   const [files, setFiles] = React.useState([]);
   const [text, setText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [loading2, setLoading2] = React.useState(false);
   const [snackbar, setSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState("");
   const [severity, setSeverity] = React.useState("info");
@@ -20,35 +21,30 @@ function ApplicationPage() {
   const init = React.useCallback(async () => {
     let temp = [];
     try {
+      setLoading2(true);
       const resp = await applicationService.getApplicationById(
         user?.studentNumber
       );
-      console.log(resp);
 
       if (resp.status !== 200) {
         setSnackbarMessage(resp?.data?.error?.message);
         setSnackbar(true);
         setSeverity("error");
       } else {
-        const data = resp?.data;
-        const regex = /'([^']+)'/g;
-        const filePaths = data?.match(regex);
+        const data = resp?.data?.paths;
 
-        for (let index = 0; index < filePaths.length; index++) {
-          const filePath = filePaths[index].replace(/'/g, "");
+        for (let index = 0; index < data.length; index++) {
+          const filePath = data[index];
           const fileName = filePath.split("pdfs/")[1];
-          console.log(fileName);
-
           const convertedFile = {
             name: fileName,
             dataURL: filePath,
           };
-          console.log(convertedFile);
           temp[index] = convertedFile;
         }
-
         setFiles(temp);
       }
+      setLoading2(false);
     } catch (error) {
       console.error(error);
     }
@@ -65,12 +61,7 @@ function ApplicationPage() {
     init();
   }, [init, hasApplied]);
 
-  React.useEffect(() => {
-    console.log(files);
-  }, [files]);
-
   const handleFileUpload = (e, index) => {
-    console.log(e.target.files);
     if (e.target.files[0].type !== "application/pdf") {
       setSnackbarMessage("Please upload only pdf files!");
       setSnackbar(true);
@@ -117,15 +108,16 @@ function ApplicationPage() {
         setSnackbarMessage("Your application has been successfully sent!");
         setSnackbar(true);
         setSeverity("success");
-        const userObject = user;
+        const userData = JSON.parse(user);
 
-        // Modify the hasApplied field of the object
-        userObject.hasApplied = true;
+        // Update the value of hasVoted field
+        userData.hasVoted = 1;
 
-        // Convert the modified object back to a string
-        const updatedUserObjectString = JSON.stringify(userObject);
-        SessionHelper.setUser(updatedUserObjectString);
-        console.log(SessionHelper.getUser());
+        // Convert the updated object to a JSON string
+        const updatedData = JSON.stringify(userData);
+
+        // Set the updated JSON string back in the localStorage
+        SessionHelper.setUser(updatedData);
       } else {
         setSnackbarMessage(res?.data?.error?.message);
         setSnackbar(true);
@@ -154,6 +146,7 @@ function ApplicationPage() {
             handleDeleteFile={handleDeleteFile}
             files={files[0]}
             disabled={hasApplied}
+            loading={loading2}
           />
         }
         {
@@ -164,6 +157,7 @@ function ApplicationPage() {
             handleDeleteFile={handleDeleteFile}
             files={files[1]}
             disabled={hasApplied}
+            loading={loading2}
           />
         }
         {
@@ -176,6 +170,7 @@ function ApplicationPage() {
             handleDeleteFile={handleDeleteFile}
             files={files[2]}
             disabled={hasApplied}
+            loading={loading2}
           />
         }
         <TextField

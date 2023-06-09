@@ -18,7 +18,9 @@ const rejectUser = async (data) => {
 }
 
 const getDocumentOfUser = async (data) => {
-    const res = await Request("get", API_URL + "/applicationApprovements/getDocument/", data);
+    const res = await Request("post", "/candidateController/candidates/getDocument/", {
+        studentid: data,
+    });
     return res;
 }
 

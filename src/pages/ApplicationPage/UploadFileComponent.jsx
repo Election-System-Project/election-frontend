@@ -1,6 +1,6 @@
 import React from "react";
 import useStyles from "./ApplicationPage.styles";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, CircularProgress } from "@mui/material";
 import { Delete } from "@material-ui/icons";
 
 function UploadFileComponent({
@@ -10,9 +10,9 @@ function UploadFileComponent({
   handleDeleteFile,
   files,
   disabled,
+  loading,
 }) {
   const classes = useStyles();
-  console.log(files);
   return (
     <div className={classes.applicationCard}>
       <div className={classes.text}>
