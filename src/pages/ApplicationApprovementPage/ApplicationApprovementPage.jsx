@@ -15,6 +15,7 @@ import EnhancedTableHead from "./components/EnhancedTableHead";
 import EnhancedTableToolbar from "./components/EnhancedTableToolbar";
 import StableSort from "./components/StableSort";
 
+
 function createData(
     student_id,
     name,
@@ -36,7 +37,7 @@ function createData(
 }
 
 
- 
+
 
 
 
@@ -73,32 +74,32 @@ export default function ApplicationApprovementPage() {
 
     const fetchData = React.useCallback(async () => {
         try {
-          const res = await approvementService.fetchData();
-          if (res && res.status === 200) {
-            console.log(res.data);
-            const newRows = res.data.map((element) =>
-            createData(
-              element.student_id,
-              element.name,
-              element.department,
-              element.grade,
-            )
-          );
-          setRows(newRows);
-            
-          
-          } else {
-            throw new Error("Failed to get data");
-          }
+            const res = await approvementService.fetchData();
+            if (res && res.status === 200) {
+                console.log(res.data);
+                const newRows = res.data.map((element) =>
+                    createData(
+                        element.student_id,
+                        element.name,
+                        element.department,
+                        element.grade,
+                    )
+                );
+                setRows(newRows);
+
+
+            } else {
+                throw new Error("Failed to get data");
+            }
         } catch (error) {
-          console.error(error);
-          // Handle error
+            console.error(error);
+            // Handle error
         }
-      }, []);
-    
-      React.useEffect(() => {
+    }, []);
+
+    React.useEffect(() => {
         fetchData();
-      }, [fetchData]);
+    }, [fetchData]);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === "asc";
@@ -118,60 +119,114 @@ export default function ApplicationApprovementPage() {
     const handleClick = (event, student_id) => {
         const selectedIndex = selected.indexOf(student_id);
         let newSelected = [];
-      
+
         if (selectedIndex === -1) {
-          newSelected = [...selected, student_id];
+            newSelected = [...selected, student_id];
         } else {
-          newSelected = selected.filter((selectedId) => selectedId !== student_id);
+            newSelected = selected.filter((selectedId) => selectedId !== student_id);
         }
-      
+
         setSelected(newSelected);
-      };
-      
+    };
+
 
     const handleApprove = async () => {
         try {
-          const selectedUsers = rows.filter((row) => selected.includes(row.student_id));
-          console.log(selectedUsers); // Selected users are logged to the console
-          approvementService.approveUser(selectedUsers);
-          window.location.reload();
-        } catch (error) {
-          console.error(error);
-          // Error handling
-        }
-      };
-      
-    
-      
-
-      const handleReject = async () => {
-        try {
-          const selectedUsers = rows.filter((row) => selected.includes(row.student_id));
-          console.log(selectedUsers); // Selected users are logged to the console
-          approvementService.rejectUser(selectedUsers);
-          window.location.reload();
-        } catch (error) {
-          console.error(error);
-          // Error handling
-        }
-      };
-      
-
-    const handleDocumentClick = async (event, name, docId) => {
-        try {
-            const res = await approvementService.getDocumentOfUser(name, docId);
-            console.log(res);
-            if (res) {
-                // Item deleted successfully
-                window.location.reload();
-            } else {
-                throw new Error("Failed to delete announcement!");
-            }
+            const selectedUsers = rows.filter((row) => selected.includes(row.student_id));
+            console.log(selectedUsers); // Selected users are logged to the console
+            approvementService.approveUser(selectedUsers);
+            window.location.reload();
         } catch (error) {
             console.error(error);
-            // Handle error
+            // Error handling
         }
     };
+
+
+
+
+    const handleReject = async () => {
+        try {
+            const selectedUsers = rows.filter((row) => selected.includes(row.student_id));
+            console.log(selectedUsers); // Selected users are logged to the console
+            approvementService.rejectUser(selectedUsers);
+            window.location.reload();
+        } catch (error) {
+            console.error(error);
+            // Error handling
+        }
+    };
+
+    // const convertToBlob = (data, type) => {
+    //     const byteCharacters = atob(data);
+    //     const byteArrays = [];
+
+    //     for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+    //       const slice = byteCharacters.slice(offset, offset + 512);
+    //       const byteNumbers = new Array(slice.length);
+
+    //       for (let i = 0; i < slice.length; i++) {
+    //         byteNumbers[i] = slice.charCodeAt(i);
+    //       }
+
+    //       const byteArray = new Uint8Array(byteNumbers);
+    //       byteArrays.push(byteArray);
+    //     }
+
+    //     return new Blob(byteArrays, { type });
+    //   };
+
+
+
+
+    const handleDocumentClick = async (event, student_id, document_id) => {
+        const res = await approvementService.getDocumentOfUser(student_id);
+        console.log(res.data);
+        console.log(res?.data.documents[document_id]);
+        const byteCharacters = atob(res?.data.documents[document_id]);
+
+        // Convert the decoded string to an array buffer
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+
+        // Create a Blob from the array buffer
+        const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+        // Open the file in a new window
+        const fileURL = URL.createObjectURL(blob);
+        window.open(fileURL);
+        // const blob = convertToBlob(res.data, 'application/pdf');
+        // const url = URL.createObjectURL(blob);
+        // const link = document.createElement('a');
+        // link.href = url;
+        // link.download = 'converted_file.pdf';
+        // link.click();
+
+        //   const res =  approvementService.getDocumentOfUser(student_id).then(blob => {
+        //     const downloadUrl = URL.createObjectURL(blob);
+        //     const a = document.createElement('a');
+        //     a.href = downloadUrl;
+        //     a.download = 'document.pdf';
+        //     a.click();
+        //     URL.revokeObjectURL(downloadUrl);
+        //   })
+        //   .catch(error => {
+        //     console.error('Error downloading PDF:', error);
+        //   });
+        // const file_paths = res?.data.slice(1, -1);
+        // const myFilePaths = file_paths.split("'><");
+        // const filePath = myFilePaths[document_id];
+        // console.log(filePath);
+
+
+    };
+
+
+
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -194,7 +249,7 @@ export default function ApplicationApprovementPage() {
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage
             ),
-        [order, orderBy, page, rowsPerPage,rows]
+        [order, orderBy, page, rowsPerPage, rows]
     );
 
     return (
@@ -249,13 +304,13 @@ export default function ApplicationApprovementPage() {
                                         <TableCell align="left">{row.department}</TableCell>
                                         <TableCell align="right">{row.gpa}</TableCell>
                                         <TableCell align="left">
-                                            <Button onClick={(event) => handleDocumentClick(event, row.name, 1)}>View</Button>
+                                            <Button onClick={(event) => handleDocumentClick(event, row.student_id, 0)}>View</Button>
                                         </TableCell>
                                         <TableCell align="left">
-                                            <Button onClick={(event) => handleDocumentClick(event, row.name, 2)}>View</Button>
+                                            <Button onClick={(event) => handleDocumentClick(event, row.student_id, 1)}>View</Button>
                                         </TableCell>
                                         <TableCell align="left">
-                                            <Button onClick={(event) => handleDocumentClick(event, row.name, 3)}>View</Button>
+                                            <Button onClick={(event) => handleDocumentClick(event, row.student_id, 2)}>View</Button>
                                         </TableCell>
                                     </TableRow>
                                 );

@@ -47,37 +47,32 @@ function UploadFileComponent({
           Choose a File
         </Button>
       </label>
-      {loading ? (
-        <CircularProgress style={{ color: "#999" }} />
-      ) : (
-        files &&
-        files?.length !== 0 && (
-          <Typography
-            variant="body1"
-            className={classes.fileName}
+      {files && files?.length !== 0 && (
+        <Typography
+          variant="body1"
+          className={classes.fileName}
+          sx={{
+            display: "inline-block",
+            border: "dashed",
+            marginLeft: "2rem",
+            padding: "1rem",
+            maxWidth: "400px",
+            height: "auto",
+          }}
+        >
+          {files?.name}
+          <Button
+            onClick={() => handleDeleteFile(index)}
             sx={{
               display: "inline-block",
-              border: "dashed",
-              marginLeft: "2rem",
-              padding: "1rem",
-              maxWidth: "400px",
-              height: "auto",
+              color: "white",
+              justifyContent: "right",
             }}
+            disabled={disabled}
           >
-            {files?.name}
-            <Button
-              onClick={() => handleDeleteFile(index)}
-              sx={{
-                display: "inline-block",
-                color: "white",
-                justifyContent: "right",
-              }}
-              disabled={disabled}
-            >
-              <Delete />
-            </Button>
-          </Typography>
-        )
+            <Delete />
+          </Button>
+        </Typography>
       )}
     </div>
   );

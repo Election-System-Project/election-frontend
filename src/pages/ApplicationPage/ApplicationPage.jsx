@@ -21,10 +21,11 @@ function ApplicationPage() {
   const init = React.useCallback(async () => {
     let temp = [];
     try {
+      setLoading2(true);
       const resp = await applicationService.getApplicationById(
         user?.studentNumber
       );
-      setLoading2(true);
+
       if (resp.status !== 200) {
         setSnackbarMessage(resp?.data?.error?.message);
         setSnackbar(true);
@@ -107,7 +108,7 @@ function ApplicationPage() {
         setSnackbarMessage("Your application has been successfully sent!");
         setSnackbar(true);
         setSeverity("success");
-        const userData = JSON.parse(localStorage.getItem("user"));
+        const userData = JSON.parse(user);
 
         // Update the value of hasVoted field
         userData.hasVoted = 1;
@@ -116,7 +117,7 @@ function ApplicationPage() {
         const updatedData = JSON.stringify(userData);
 
         // Set the updated JSON string back in the localStorage
-        localStorage.setItem("user", updatedData);
+        SessionHelper.setUser(updatedData);
       } else {
         setSnackbarMessage(res?.data?.error?.message);
         setSnackbar(true);
