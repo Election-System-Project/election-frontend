@@ -103,7 +103,7 @@ export default function Dashboard() {
         throw new Error("Failed to get messages");
       }
       console.log(res);
-      setMessages(res?.data?.message);
+      setMessages(res?.data);
     });
   };
 
