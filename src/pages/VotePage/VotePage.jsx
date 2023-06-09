@@ -45,17 +45,19 @@ const VotePage = () => {
 
   const handleButtonClick = async (e) => {
     e.preventDefault();
-    console.log(radioSelection);
+
+    if (radioSelection === null) {
+      alert("Please select a candidate.");
+      return;
+    }
 
     const res = await voteService.vote(radioSelection, user.studentNumber);
     if (res.status === 200) {
       user.hasVoted = 1;
-      console.log(user);
       const updatedData = JSON.stringify(user);
       localStorage.setItem("user", updatedData);
       window.location = "/dashboard";
     }
-    console.log(res);
   };
 
   return (
