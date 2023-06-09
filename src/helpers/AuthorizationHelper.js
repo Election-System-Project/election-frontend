@@ -4,13 +4,13 @@ let authorizationLookup = {};
 const user = SessionHelper.getUser();
 
 authorizationLookup.application = {
-  Admin: { view: true },
+  Admin: { view: false },
   Student: { view: true },
   Head: { view: false },
 };
 
 authorizationLookup.vote = {
-  Admin: { view: true },
+  Admin: { view: false },
   Student: { view: true },
   Head: { view: false },
 };
@@ -28,7 +28,7 @@ authorizationLookup.resultApprovement = {
 };
 
 authorizationLookup.applicationApprovement = {
-  Admin: { view: true },
+  Admin: { view: false },
   Student: { view: false },
   Head: { view: true },
 };
