@@ -171,7 +171,7 @@ export default function AppRoutes() {
         active && authorization.vote && { label: "Vote for Department Representatives", Path: "/vote" },
         active && authorization.resultApprovement && { label: "Result Approvement", Path: "/approvements/result" },
         active && authorization.applicationApprovement && { label: "Application Approvement", Path: "/approvements/application" },
-        active && authorization.candidateStatus && { label: "Candidate Status", Path: "/status" },
+        active && authorization.candidateStatus && { label: "Election Status", Path: "/status" },
       ];
       setDrawerList(drawerList);
     }
